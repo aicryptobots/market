@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>PRIME AI TRADING BOT | ADMIN PANEL</title>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.2/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/luxon@3.4.0/build/global/luxon.min.js"></script>
+    <script src="https://unpkg.com/lightweight-charts@4.1.0/dist/lightweight-charts.standalone.production.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Translate -->
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Login Page -->
+    <div class="login-container" id="loginPage">
+        <div class="login-box">
+            <div class="login-logo">
+                <div class="logo-icon">₿</div>
+                <h2>PrimeAI Trade</h2>
+                <p>Enter your trading code to continue</p>
+            </div>
+
+            <div class="login-form">
+                <input type="text" class="login-input" id="tradingCode" placeholder="Enter Trading Code" maxlength="6" autocomplete="off">
+                <button class="login-btn" onclick="loginWithCode()">Access Trading Bot</button>
+                <div class="login-error" id="loginError">Invalid trading code or code expired!</div>
+            </div>
+
+            <div class="login-info">
+                <p>Protected System • One Device Only</p>
+                <p>Contact admin for access: <a href="#" onclick="showNotification('Contact Admin')">admin@primeai.com</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-container" id="adminPanel">
+        <div class="admin-header">
+            <div class="admin-title">
+                <h1>Admin Panel</h1>
+                <span>Secret URL</span>
+            </div>
+            <button class="admin-logout" onclick="logoutFromAdmin()">Logout</button>
+        </div>
+
+        <div class="admin-content">
+            <div class="admin-grid">
+                <div class="admin-card">
+                    <h3><i class="fas fa-qrcode"></i> Generate Trading Code</h3>
+                    <div class="code-display">
+                        <div class="code-text" id="newCode">------</div>
+                        <div class="code-info">New 6-digit trading code</div>
+                    </div>
+
+                    <div class="expiry-selector">
+                        <div class="expiry-option selected" onclick="selectExpiry(30)" id="expiry30">
+                            <div class="days">30</div>
+                            <div class="label">Days</div>
+                        </div>
+                        <div class="expiry-option" onclick="selectExpiry(90)" id="expiry90">
+                            <div class="days">90</div>
+                            <div class="label">Days</div>
+                        </div>
+                        <div class="expiry-option" onclick="selectExpiry(180)" id="expiry180">
+                            <div class="days">180</div>
+                            <div class="label">Days</div>
+                        </div>
+                        <div class="expiry-option" onclick="selectExpiry(365)" id="expiry365">
+                            <div class="days">365</div>
+                            <div class="label">Days</div>
+                        </div>
+                    </div>
+
+                    <button class="admin-btn" onclick="generateNewCode()">
+                        <i class="fas fa-sync-alt"></i> Generate New Code
+                    </button>
+                </div>
+
+                <div class="admin-card">
+                    <h3><i class="fas fa-users"></i> User Management</h3>
+                    <div class="users-list" id="usersList">
+                        <!-- Users will be loaded here -->
+                    </div>
+                </div>
+
+                <div class="admin-card">
+                    <h3><i class="fas fa-trash-alt"></i> Remove User</h3>
+                    <p style="color: #94A3B8; margin-bottom: 15px;">Remove user by trading code</p>
+                    <input type="text" class="login-input" id="removeCode" placeholder="Enter trading code" style="margin-bottom: 10px;">
+                    <button class="admin-btn remove" onclick="removeUser()">
+                        <i class="fas fa-trash"></i> Remove User
+                    </button>
+                </div>
+            </div>
+
+            <div class="admin-card">
+                <h3><i class="fas fa-info-circle"></i> System Information</h3>
+                <p style="color: #94A3B8; margin-bottom: 10px;">• One device per trading code</p>
+                <p style="color: #94A3B8; margin-bottom: 10px;">• Auto-logout if same code used elsewhere</p>
+                <p style="color: #94A3B8; margin-bottom: 10px;">• Daily expiry check - expired codes auto-deactivate</p>
+                <p style="color: #94A3B8;">• Total users: <span id="totalUsers">0</span></p>
+                <p style="color: #F59E0B; margin-top: 10px;">📅 Last expiry check: <span id="lastExpiryCheck">Just now</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Website -->
+    <div class="main-website" id="mainWebsite">
+        <!-- Navbar -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <div class="logo-icon">₿</div>
+                    <span>PrimeAI Trade</span>
+                </div>
+
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
+
+                <div class="nav-menu" id="navMenu">
+                    <div class="nav-links">
+                        <a href="#" onclick="showNotification('Home Page')"><i class="fas fa-home"></i> Home</a>
+                        <a href="#" onclick="document.getElementById('how-it-works').scrollIntoView({behavior: 'smooth'})"><i class="fas fa-chart-line"></i> How it Works</a>
+                        <a href="#" onclick="showNotification('Privacy Policy')"><i class="fas fa-shield-alt"></i> Privacy Policy</a>
+                        <a href="#" onclick="showNotification('Contact Us')"><i class="fas fa-envelope"></i> Contact</a>
+                    </div>
+
+                    <div class="user-info">
+                        <span class="user-code-display" id="userCodeDisplay">BTC-123</span>
+                        <button class="logout-btn" onclick="logout()">Logout</button>
+                    </div>
+
+                    <!-- Google Translate -->
+                    <div class="translate-container">
+                        <div id="google_translate_element"></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Prime Header -->
+            <div class="prime-header">
+                <div class="logo-area">
+                    <div class="prime-logo">₿</div>
+                    <div class="title">
+                        <h1>PRIME AI TRADING BOT</h1>
+                        <p>99.7% ACCURACY • 400+ COINS • AI-POWERED</p>
+                    </div>
+                </div>
+
+                <div class="prime-status">
+                    <span class="accuracy-badge">ACCURACY: 99.7%</span>
+                    <span class="algo-badge">AI v5.0</span>
+                    <div class="led"></div>
+                    <span id="connectionStatus">Connected</span>
+                    <span>|</span>
+                    <span id="updateTime">Updating...</span>
+                </div>
+            </div>
+
+            <!-- Coin Selector -->
+            <div class="coin-selector">
+                <div class="coin-header">
+                    <h3><i class="fas fa-coins"></i> Select Trading Pair</h3>
+                    <div class="selected-coin" onclick="toggleCoinDropdown()">
+                        <div class="selected-coin-icon" id="selectedCoinIcon" style="background: #F7931A;">₿</div>
+                        <div>
+                            <span class="selected-coin-symbol" id="selectedCoinSymbol">BTC</span>
+                            <span class="selected-coin-name" id="selectedCoinName">Bitcoin</span>
+                        </div>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <div class="coin-dropdown" id="coinDropdown">
+                    <div class="coin-search">
+                        <input type="text" id="coinSearch" placeholder="Search coin by name or symbol..." onkeyup="filterCoins()">
+                    </div>
+                    <div class="coin-list" id="coinList">
+                        <!-- Coins will be loaded here -->
+                    </div>
+                    <div class="coin-count" id="coinCount">Loading 400+ coins...</div>
+                </div>
+            </div>
+
+            <!-- Alert Control -->
+            <div class="alert-control">
+                <div class="alert-toggle">
+                    <span>🔔 Audio Alerts</span>
+                    <div class="toggle-switch" id="alertToggle" onclick="toggleAlerts()">
+                        <div class="toggle-slider"></div>
+                    </div>
+                </div>
+                <div class="alert-levels">
+                    <div class="alert-level">
+                        <span class="level-80">80%+</span>
+                        <span>🔊 Alert 1</span>
+                    </div>
+                    <div class="alert-level">
+                        <span class="level-90">90%+</span>
+                        <span>🔊 Alert 2</span>
+                    </div>
+                </div>
+                <button class="test-sound" onclick="testAlert(80)">Test 80%</button>
+                <button class="test-sound" onclick="testAlert(90)">Test 90%</button>
+            </div>
+
+            <!-- Prime Ticker -->
+            <div class="prime-ticker" id="primeTicker">
+                <!-- Dynamic -->
+            </div>
+
+            <!-- Main Grid -->
+            <div class="main-grid">
+                <!-- Chart Section -->
+                <div class="chart-section">
+                    <div class="chart-header">
+                        <div class="algo-title">
+                            <h2>📊 <span id="currentCoin">BTC/USDT</span> • LIVE CHART</h2>
+                            <span class="prime-badge">REAL-TIME ANALYSIS</span>
+                        </div>
+                        <div class="timeframe-controls">
+                            <button class="timeframe-btn" data-timeframe="1">1m</button>
+                            <button class="timeframe-btn active" data-timeframe="5">5m</button>
+                            <button class="timeframe-btn" data-timeframe="15">15m</button>
+                            <button class="timeframe-btn" data-timeframe="60">1h</button>
+                            <button class="timeframe-btn" data-timeframe="240">4h</button>
+                            <button class="timeframe-btn" data-timeframe="1D">1d</button>
+                        </div>
+                    </div>
+
+                    <div class="chart-wrapper" id="chartWrapper">
+                        <div id="tradingview_chart" style="width:100%; height:100%;"></div>
+
+                        <!-- AI Overlay -->
+                        <div class="ai-overlay">
+                            <div class="ai-metric">
+                                <span class="metric-label">AI SIGNAL</span>
+                                <span class="metric-value" id="aiSignal">BUY</span>
+                            </div>
+                            <div class="ai-metric">
+                                <span class="metric-label">CONFIDENCE</span>
+                                <span class="metric-value" id="aiConfidence">99.7%</span>
+                            </div>
+                            <div class="ai-metric">
+                                <span class="metric-label">PATTERNS</span>
+                                <span class="metric-value" id="aiPatterns">12</span>
+                            </div>
+                        </div>
+
+                        <!-- AI Signals -->
+                        <div class="ai-signals">
+                            <span class="pill" id="rsiPill">RSI: Oversold</span>
+                            <span class="pill" id="macdPill">MACD: Buy</span>
+                            <span class="pill" id="patternPill">Patterns: 5B/2S</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <!-- Trading Panel -->
+                    <div class="trading-panel">
+                        <div class="panel-header">
+                            <h3>💰 TRADING PANEL</h3>
+                        </div>
+
+                        <!-- Support/Resistance -->
+                        <div class="level-box">
+                            <div class="level-item">
+                                <div class="level-label">Support</div>
+                                <div class="level-value support" id="supportLevel">$66,763</div>
+                            </div>
+                            <div class="level-item">
+                                <div class="level-label">Resistance</div>
+                                <div class="level-value resistance" id="resistanceLevel">$67,180</div>
+                            </div>
+                        </div>
+
+                        <!-- Current Price -->
+                        <div class="current-price-large">
+                            <div class="label">Current Price</div>
+                            <div class="value" id="currentPriceLarge">$66,793</div>
+                        </div>
+
+                        <!-- Trading Stats -->
+                        <div class="trading-stats">
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-label">Trades</div>
+                                    <div class="stat-value" id="totalTrades">0</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Win Rate</div>
+                                    <div class="stat-value win" id="winRate">99.7%</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Profit</div>
+                                    <div class="stat-value win" id="totalProfit">$0.00</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-label">Accuracy</div>
+                                    <div class="stat-value win" id="accuracy">99.7%</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Demo Trading -->
+                        <div class="demo-trading">
+                            <div class="balance-info">
+                                <div class="balance-item">
+                                    <div class="balance-label">Balance</div>
+                                    <div class="balance-value" id="balance">$10,000.00</div>
+                                </div>
+                                <div class="balance-item">
+                                    <div class="balance-label">P&L</div>
+                                    <div class="balance-value" id="totalPnl">$0.00</div>
+                                </div>
+                            </div>
+
+                            <!-- Margin Control -->
+                            <div class="margin-control">
+                                <div class="margin-header">
+                                    <span class="margin-label">Leverage</span>
+                                    <span class="margin-value" id="leverageValue">5X</span>
+                                </div>
+
+                                <input type="range" class="margin-slider" id="leverageSlider" min="1" max="10" value="5" step="1">
+
+                                <div class="margin-levels">
+                                    <span class="margin-level" onclick="setLeverage(1)">1X</span>
+                                    <span class="margin-level" onclick="setLeverage(2)">2X</span>
+                                    <span class="margin-level" onclick="setLeverage(3)">3X</span>
+                                    <span class="margin-level" onclick="setLeverage(4)">4X</span>
+                                    <span class="margin-level active" onclick="setLeverage(5)">5X</span>
+                                    <span class="margin-level" onclick="setLeverage(6)">6X</span>
+                                    <span class="margin-level" onclick="setLeverage(7)">7X</span>
+                                    <span class="margin-level" onclick="setLeverage(8)">8X</span>
+                                    <span class="margin-level" onclick="setLeverage(9)">9X</span>
+                                    <span class="margin-level" onclick="setLeverage(10)">10X</span>
+                                </div>
+
+                                <div class="margin-info">
+                                    <span>Size: <span id="positionSize">$500</span></span>
+                                    <span>Margin: <span id="marginRequired">$100</span></span>
+                                </div>
+                            </div>
+
+                            <div class="trade-inputs">
+                                <input type="number" class="trade-input" id="tradeAmount" value="100" placeholder="Amount">
+                            </div>
+
+                            <div class="trade-buttons">
+                                <button class="trade-btn buy" onclick="executeTrade('buy')">
+                                    🟢 BUY
+                                    <span class="btn-subtitle">Follow Signal</span>
+                                </button>
+                                <button class="trade-btn sell" onclick="executeTrade('sell')">
+                                    🔴 SELL
+                                    <span class="btn-subtitle">Follow Signal</span>
+                                </button>
+                            </div>
+
+                            <div>
+                                <h4 style="margin-bottom:8px; font-size:0.9rem;">Open Positions</h4>
+                                <div class="positions-list" id="openPositions">
+                                    <div style="text-align:center; color:#94A3B8; padding:10px;">No open positions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendation Box -->
+            <div class="recommendation-box" id="recommendationBox">
+                <div class="rec-header">
+                    <i class="fas fa-star"></i>
+                    <h2>RECOMMENDATION ENTRY</h2>
+                </div>
+
+                <div class="rec-content">
+                    <div class="rec-support">
+                        <div class="title">
+                            <i class="fas fa-arrow-down"></i> SUPPORT ZONE (BUY)
+                        </div>
+                        <div class="price-range" id="supportRange">$66,763 - $66,800</div>
+                        <div class="type">Support is <span style="color:#22C55E; font-weight:600;">LOW</span> of range</div>
+                        <div class="breakout" id="breakoutUp">📈 Breakout Up: <span style="color:#22C55E;">75% chance</span></div>
+                        <div class="target" style="margin-top:8px; color:#94A3B8;">🎯 Target: <span style="color:#22C55E;" id="supportTarget">$67,500 - $68,000</span></div>
+                    </div>
+
+                    <div class="rec-resistance">
+                        <div class="title">
+                            <i class="fas fa-arrow-up"></i> RESISTANCE ZONE (SELL)
+                        </div>
+                        <div class="price-range" id="resistanceRange">$67,150 - $67,180</div>
+                        <div class="type">Resistance is <span style="color:#EF4444; font-weight:600;">HIGH</span> of range</div>
+                        <div class="breakout" id="breakoutDown">📉 Breakout Down: <span style="color:#EF4444;">65% chance</span></div>
+                        <div class="target" style="margin-top:8px; color:#94A3B8;">🎯 Target: <span style="color:#EF4444;" id="resistanceTarget">$66,500 - $66,200</span></div>
+                    </div>
+
+                    <div class="rec-current">
+                        <div class="status">
+                            <div>
+                                <span style="color:#94A3B8;">⚡ CURRENT ZONE:</span>
+                                <span class="zone" id="currentZone" style="color:#22C55E; margin-left:8px;">SUPPORT</span>
+                            </div>
+                            <div>
+                                <span style="color:#94A3B8;">Price:</span>
+                                <span style="color:white; font-weight:600; margin-left:5px;" id="currentZonePrice">$66,793</span>
+                            </div>
+                            <div>
+                                <span class="action action-buy" id="currentAction">CONSIDER BUY</span>
+                            </div>
+                        </div>
+                        <div class="rec-targets">
+                            <span>Support holds → Buy opportunity</span>
+                            <span>Resistance breaks → Sell opportunity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Signals -->
+            <div class="signals-container">
+                <div class="signal-header">
+                    <h3>⚡ AI LIVE SIGNALS</h3>
+                    <span class="signal-count" id="signalCount">0</span>
+                </div>
+                <div id="signalList">
+                    <!-- Dynamic Signals -->
+                </div>
+            </div>
+
+            <!-- AI Analytics -->
+            <div class="ai-analytics">
+                <div class="analytics-header">
+                    <h3>🤖 AI ANALYTICS (99.7% ACCURACY)</h3>
+                    <span class="signal-badge" id="analyticsSignal">STRONG BUY</span>
+                </div>
+
+                <div class="pressure-meter">
+                    <div class="pressure-row">
+                        <span class="pressure-label">BUY PRESSURE</span>
+                        <span class="pressure-value buy" id="buyPressure">72.1%</span>
+                    </div>
+                    <div class="pressure-bar">
+                        <div class="pressure-fill buy" id="buyPressureBar" style="width:72.1%"></div>
+                    </div>
+
+                    <div class="pressure-row">
+                        <span class="pressure-label">SELL PRESSURE</span>
+                        <span class="pressure-value sell" id="sellPressure">27.9%</span>
+                    </div>
+                    <div class="pressure-bar">
+                        <div class="pressure-fill sell" id="sellPressureBar" style="width:27.9%"></div>
+                    </div>
+                </div>
+
+                <div class="indicator-grid">
+                    <div class="indicator-card">
+                        <div class="label">RSI (14)</div>
+                        <div class="value" id="rsiValue">18.72</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="label">MACD</div>
+                        <div class="value" id="macdValue">19.53</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="label">Volume</div>
+                        <div class="value" id="volumeValue">0.25B</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="label">ATR</div>
+                        <div class="value" id="atrValue">198.07</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="label">OBV</div>
+                        <div class="value" id="obvValue">2.45M</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="label">Stoch RSI</div>
+                        <div class="value" id="stochRsiValue">62.3</div>
+                    </div>
+                </div>
+
+                <div class="pattern-count">
+                    <div class="pattern-card">
+                        <div class="label">Bullish Patterns</div>
+                        <div class="value buy" id="bullishCount">5</div>
+                    </div>
+                    <div class="pattern-card">
+                        <div class="label">Bearish Patterns</div>
+                        <div class="value sell" id="bearishCount">2</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How it Works Section -->
+            <div id="how-it-works" class="how-it-works">
+                <h2>📊 How To Trade - Complete Guide</h2>
+
+                <div class="indicator-guide">
+                    <!-- AI SIGNAL Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-robot"></i> AI SIGNAL</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideAiSignal">BUY</div>
+                            <div class="label">Current Signal</div>
+                        </div>
+                        <table class="action-table">
+                            <tr>
+                                <th>Signal</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-buy">BUY</span></td>
+                                <td>Strong Buy Signal - Enter Long</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-sell">SELL</span></td>
+                                <td>Strong Sell Signal - Enter Short</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-neutral">NEUTRAL</span></td>
+                                <td>Wait for clearer signal</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- CONFIDENCE Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-chart-line"></i> CONFIDENCE</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideConfidence">99.7%</div>
+                            <div class="label">Current Confidence</div>
+                        </div>
+                        <div class="confidence-meter">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill high" style="width:99.7%"></div>
+                            </div>
+                        </div>
+                        <table class="action-table">
+                            <tr>
+                                <th>Level</th>
+                                <th>Meaning</th>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-neutral">50-70%</span></td>
+                                <td>Moderate confidence - Proceed with caution</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-buy">80-89%</span></td>
+                                <td>High confidence - Good entry point</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-buy">90%+</span></td>
+                                <td>Very high confidence - Strong signal</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top:10px; color:#F59E0B;">🔊 Audio alert at 80% and 90%</p>
+                    </div>
+
+                    <!-- PATTERNS Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-candlestick-chart"></i> PATTERNS</h3>
+                        <div class="value-range">
+                            <div class="current" id="guidePatterns">5B/2S</div>
+                            <div class="label">Current Patterns</div>
+                        </div>
+                        <table class="action-table">
+                            <tr>
+                                <th>Pattern</th>
+                                <th>Meaning</th>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-buy">Bullish Patterns</span></td>
+                                <td>More bullish = stronger BUY signal</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-sell">Bearish Patterns</span></td>
+                                <td>More bearish = stronger SELL signal</td>
+                            </tr>
+                            <tr>
+                                <td>Example: 5B/2S</td>
+                                <td>5 Bullish, 2 Bearish - Buy bias</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="indicator-guide">
+                    <!-- MACD Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-chart-bar"></i> MACD</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideMacd">19.53</div>
+                            <div class="label">Current MACD</div>
+                        </div>
+                        <table class="action-table">
+                            <tr>
+                                <th>Value</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-buy">Positive (+)</span></td>
+                                <td>Bullish momentum - Consider BUY</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-sell">Negative (-)</span></td>
+                                <td>Bearish momentum - Consider SELL</td>
+                            </tr>
+                            <tr>
+                                <td>Cross above zero</td>
+                                <td>Strong BUY signal</td>
+                            </tr>
+                            <tr>
+                                <td>Cross below zero</td>
+                                <td>Strong SELL signal</td>
+                            </tr>
+                        </table>
+                        <p style="margin-top:10px; color:#94A3B8;">Higher positive = Stronger bullish momentum</p>
+                    </div>
+
+                    <!-- RSI Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-gauge-high"></i> RSI (14)</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideRsi">18.72</div>
+                            <div class="label">Current RSI</div>
+                        </div>
+                        <table class="action-table">
+                            <tr>
+                                <th>Range</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-buy">Below 30</span></td>
+                                <td>Oversold - Strong BUY signal</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-neutral">30-50</span></td>
+                                <td>Bearish zone - Consider SELL</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-neutral">50-70</span></td>
+                                <td>Bullish zone - Consider BUY</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-sell">Above 70</span></td>
+                                <td>Overbought - Strong SELL signal</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Volume Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-chart-simple"></i> Volume</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideVolume">0.25B</div>
+                            <div class="label">24h Volume</div>
+                        </div>
+                        <table class="action-table">
+                            <tr>
+                                <th>Volume</th>
+                                <th>Meaning</th>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-buy">High Volume</span></td>
+                                <td>Strong price movement likely</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-neutral">Average Volume</span></td>
+                                <td>Normal trading conditions</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge-sell">Low Volume</span></td>
+                                <td>Weak price movement expected</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="indicator-guide">
+                    <!-- Support Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-arrow-down"></i> Support</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideSupport">$66,763</div>
+                            <div class="label">Current Support</div>
+                        </div>
+                        <p style="margin:15px 0; color:#94A3B8;">Price tends to bounce up from support</p>
+                        <table class="action-table">
+                            <tr>
+                                <th>Price Action</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td>Price near support</td>
+                                <td><span class="badge-buy">BUY zone</span></td>
+                            </tr>
+                            <tr>
+                                <td>Price breaks support</td>
+                                <td><span class="badge-sell">SELL signal</span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Resistance Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-arrow-up"></i> Resistance</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideResistance">$67,180</div>
+                            <div class="label">Current Resistance</div>
+                        </div>
+                        <p style="margin:15px 0; color:#94A3B8;">Price tends to bounce down from resistance</p>
+                        <table class="action-table">
+                            <tr>
+                                <th>Price Action</th>
+                                <th>Action</th>
+                            </tr>
+                            <tr>
+                                <td>Price near resistance</td>
+                                <td><span class="badge-sell">SELL zone</span></td>
+                            </tr>
+                            <tr>
+                                <td>Price breaks resistance</td>
+                                <td><span class="badge-buy">BUY signal</span></td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- ATR Guide -->
+                    <div class="guide-card">
+                        <h3><i class="fas fa-wave-square"></i> ATR</h3>
+                        <div class="value-range">
+                            <div class="current" id="guideAtr">198.07</div>
+                            <div class="label">Current ATR</div>
+                        </div>
+                        <p style="margin:15px 0; color:#94A3B8;">Average True Range - Measures volatility</p>
+                        <table class="action-table">
+                            <tr>
+                                <th>ATR Value</th>
+                                <th>Meaning</th>
+                            </tr>
+                            <tr>
+                                <td>Higher ATR</td>
+                                <td>High volatility - Larger price moves</td>
+                            </tr>
+                            <tr>
+                                <td>Lower ATR</td>
+                                <td>Low volatility - Smaller price moves</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="steps-grid">
+                    <div class="step-card">
+                        <div class="step-number">1</div>
+                        <h3>Choose a Coin</h3>
+                        <p>Select from 400+ cryptocurrencies including Bitcoin, Ethereum, and more. Use the search bar to find your favorite coin quickly.</p>
+                        <div class="step-icon">🪙</div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">2</div>
+                        <h3>Check AI Signal</h3>
+                        <p>Look at AI SIGNAL (BUY/SELL) and CONFIDENCE level. High confidence (90%+) means strong signal. Audio alerts at 80% and 90%.</p>
+                        <div class="step-icon">🤖</div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">3</div>
+                        <h3>Review TP & SL Levels</h3>
+                        <p>Each signal shows Entry Price, 4 Take Profit levels (TP1-TP4) and Stop Loss. This tells you exactly where to enter and exit.</p>
+                        <div class="step-icon">🎯</div>
+                    </div>
+
+                    <div class="step-card">
+                        <div class="step-number">4</div>
+                        <h3>Set & Execute Trade</h3>
+                        <p>Enter amount, choose leverage (1X-10X). Click BUY or SELL. Track your position with real-time P&L. Close manually or let it hit TP/SL.</p>
+                        <div class="step-icon">⚡</div>
+                    </div>
+                </div>
+
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎯</div>
+                        <div class="feature-text">
+                            <h4>Entry Price & TP Levels</h4>
+                            <p>Every signal shows exact entry price and 4 take profit targets (TP1-TP4)</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">🛑</div>
+                        <div class="feature-text">
+                            <h4>Stop Loss (SL)</h4>
+                            <p>Clear stop loss level to protect your capital from major losses</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-text">
+                            <h4>Real-time P&L</h4>
+                            <p>See your profit/loss update in real-time for every open position</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item">
+                        <div class="feature-icon">🔊</div>
+                        <div class="feature-text">
+                            <h4>Audio Alerts at 80%/90%</h4>
+                            <p>Get notified with different sounds for high confidence signals</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: center;">
+                    <button class="cta-button" onclick="showNotification('Start Trading Now!')">
+                        🚀 START TRADING NOW
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Prime Status Bar -->
+            <div class="prime-status-bar">
+                <div class="status-info">
+                    <span>📊 AI TREND: <span id="aiTrend">BULLISH</span></span>
+                    <span>🎯 FIB LEVELS: <span id="fibLevels">0.382/0.618</span></span>
+                    <span>📈 ICHIMOKU: <span id="ichimoku">Bullish</span></span>
+                </div>
+                <div>
+                    <span id="lastUpdate">Just now</span>
+                    <span class="loading-spinner" id="loadingIndicator" style="display:none;"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>About Us</h4>
+                    <p>PrimeAI Trading Bot provides advanced AI-powered trading signals with 99.7% accuracy. Trade smarter with our cutting-edge technology.</p>
+                    <div class="social-links">
+                        <a href="#" onclick="showNotification('Facebook')"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" onclick="showNotification('Twitter')"><i class="fab fa-twitter"></i></a>
+                        <a href="#" onclick="showNotification('Telegram')"><i class="fab fa-telegram-plane"></i></a>
+                        <a href="#" onclick="showNotification('Discord')"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="#" onclick="showNotification('Home Page')"><i class="fas fa-chevron-right"></i> Home</a>
+                    <a href="#" onclick="document.getElementById('how-it-works').scrollIntoView({behavior: 'smooth'})"><i class="fas fa-chevron-right"></i> How it Works</a>
+                    <a href="#" onclick="showNotification('Privacy Policy')"><i class="fas fa-chevron-right"></i> Privacy Policy</a>
+                    <a href="#" onclick="showNotification('Contact Us')"><i class="fas fa-chevron-right"></i> Contact</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <a href="#" onclick="showNotification('FAQ')"><i class="fas fa-chevron-right"></i> FAQ</a>
+                    <a href="#" onclick="showNotification('Documentation')"><i class="fas fa-chevron-right"></i> Documentation</a>
+                    <a href="#" onclick="showNotification('API')"><i class="fas fa-chevron-right"></i> API Access</a>
+                    <a href="#" onclick="showNotification('Terms')"><i class="fas fa-chevron-right"></i> Terms of Service</a>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p><i class="fas fa-envelope"></i> support@primeai.com</p>
+                    <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 123 Trading St, Crypto City</p>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; 2024 PrimeAI Trading Bot. All rights reserved. | 99.7% Accuracy • 400+ Coins • AI-Powered
+            </div>
+        </footer>
+    </div>
+
+    <!-- Custom JS -->
+    <script src="script.js"></script>
+
+    <!-- PROTECTION SCRIPT START -->
+    <style>
+        body {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+        }
+    </style>
+    <script>
+        // Disable Right Click
+        document.addEventListener("contextmenu", function(e) {
+            e.preventDefault();
+        });
+
+        // Disable Copy
+        document.addEventListener("copy", function(e) {
+            e.preventDefault();
+        });
+
+        // Disable Drag
+        document.addEventListener("dragstart", function(e) {
+            e.preventDefault();
+        });
+
+        // Disable Keyboard Shortcuts
+        document.onkeydown = function(e) {
+            // F12
+            if (e.keyCode == 123) {
+                return false;
+            }
+            // Ctrl+U
+            if (e.ctrlKey && e.keyCode == 85) {
+                return false;
+            }
+            // Ctrl+C
+            if (e.ctrlKey && e.keyCode == 67) {
+                return false;
+            }
+            // Ctrl+Shift+I
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 73) {
+                return false;
+            }
+            // Ctrl+Shift+J
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 74) {
+                return false;
+            }
+            // Ctrl+S
+            if (e.ctrlKey && e.keyCode == 83) {
+                return false;
+            }
+        };
+
+        // DevTools Detect
+        setInterval(function() {
+            if (window.outerWidth - window.innerWidth > 160 || window.outerHeight - window.innerHeight > 160) {
+                document.body.innerHTML = "Developer Tools Detected";
+            }
+        }, 1000);
+
+        // Console Warning
+        console.log("%cSTOP!", "color:red;font-size:40px");
+        console.log("This website is protected.");
+    </script>
+    <!-- PROTECTION SCRIPT END -->
+</body>
+</html>
