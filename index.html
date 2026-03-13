@@ -1377,7 +1377,7 @@
             padding: 30px;
         }
         
-        /* ==================== NEW CTA SECTION (Added) ==================== */
+        /* ==================== NEW CTA SECTION ==================== */
         .cta-section-new {
             padding: 80px 0;
             background: linear-gradient(135deg, #0B0F1C 0%, #141B2B 100%);
@@ -1493,7 +1493,7 @@
             color: #22C55E;
         }
         
-        /* ==================== WALLET ADDRESSES SECTION (Added) ==================== */
+        /* ==================== WALLET ADDRESSES SECTION ==================== */
         .wallet-section {
             padding: 40px 0 60px;
             background: #03050A;
@@ -1707,7 +1707,7 @@
             </div>
             <div class="nav-buttons">
                 <button class="nav-btn login" onclick="showNotification('Login page would open', 'info')">Log in</button>
-                <button class="nav-btn signup" onclick="showNotification('Starting your free trial...', 'success')">Start Free Trial</button>
+                <button class="nav-btn signup" onclick="document.getElementById('cta-new').scrollIntoView({behavior:'smooth'})">Start Free Trial</button>
             </div>
             <div class="mobile-menu-btn" onclick="toggleMobileMenu()">
                 <i class="fas fa-bars"></i>
@@ -2478,7 +2478,7 @@
                 </div>
             </section>
             
-            <!-- NEW CTA SECTION (Added) -->
+            <!-- NEW CTA SECTION -->
             <section class="cta-section-new" id="cta-new">
                 <div class="container">
                     <div class="cta-box-new">
@@ -2514,16 +2514,16 @@
                 </div>
             </section>
             
-            <!-- WALLET ADDRESSES SECTION (Added) -->
+            <!-- WALLET ADDRESSES SECTION (with fixed icons) -->
             <section class="wallet-section">
                 <div class="container">
                     <div class="wallet-container">
                         <h3>Payment Addresses</h3>
                         <div class="wallet-grid">
-                            <!-- TRON (TRC-20) Wallet -->
+                            <!-- TRON (TRC-20) Wallet - Fixed icon -->
                             <div class="wallet-card">
                                 <div class="wallet-icon">
-                                    <i class="fab fa-bitcoin"></i>
+                                    <i class="fas fa-coins"></i>
                                 </div>
                                 <h4>TRC-20 (TRON)</h4>
                                 <div class="wallet-address" id="tronAddress">
@@ -2534,10 +2534,10 @@
                                 </button>
                             </div>
                             
-                            <!-- BSC (BEP-20) Wallet -->
+                            <!-- BSC (BEP-20) Wallet - Fixed icon -->
                             <div class="wallet-card">
                                 <div class="wallet-icon">
-                                    <i class="fab fa-ethereum"></i>
+                                    <i class="fab fa-bitcoin"></i>
                                 </div>
                                 <h4>BEP-20 (BNB Smart Chain)</h4>
                                 <div class="wallet-address" id="bscAddress">
