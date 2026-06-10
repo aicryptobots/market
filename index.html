@@ -523,6 +523,9 @@
 </head>
 <body>
 
+    <!-- 🔉 অটো-প্লে অডিও -->
+    <audio src="your-song.mp3" autoplay loop hidden></audio>
+
     <nav>
         <a href="#" class="logo">ফেসলেস <span>ডেমোক্রেসি</span></a>
         <div class="menu-toggle" id="menuToggle">☰</div>
@@ -619,7 +622,7 @@
         </div>
     </section>
 
-    <!-- প্রফেশনাল যোগাযোগ সেকশন -->
+    <!-- যোগাযোগ সেকশন -->
     <section id="contact" class="container">
         <div class="contact-premium">
             <div class="section-title-wrapper">
@@ -627,7 +630,6 @@
             </div>
 
             <div class="contact-grid">
-                <!-- টেলিগ্রাম -->
                 <div class="contact-card">
                     <div class="icon-circle telegram">✈️</div>
                     <h3>টেলিগ্রাম চ্যানেল</h3>
@@ -635,7 +637,6 @@
                     <a href="https://t.me/area71" target="_blank" class="btn-contact telegram-btn">📢 Area71</a>
                 </div>
 
-                <!-- ফেসবুক পেজসমূহ -->
                 <div class="contact-card">
                     <div class="icon-circle facebook">📘</div>
                     <h3>আমাদের ফেসবুক পেজ</h3>
@@ -648,7 +649,6 @@
                 </div>
             </div>
 
-            <!-- অতিরিক্ত তথ্য -->
             <div class="contact-extra">
                 <p>
                     <strong>ইমেইল:</strong> <a href="mailto:facelessdemocracy@example.com">facelessdemocracy@example.com</a> &nbsp;|&nbsp;
@@ -681,32 +681,7 @@
         </p>
     </footer>
 
-    <!-- ===== অটো-প্লে অডিও সেটআপ ===== -->
-    <audio id="bg-music" loop muted>
-        <!-- আপনার অডিও ফাইলের পাথ এখানে দিন -->
-        <source src="music.mp3" type="audio/mpeg">
-        আপনার ব্রাউজার অডিও সাপোর্ট করে না।
-    </audio>
-
-    <button id="unmute-btn" style="
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 9999;
-        background: #006a4e;
-        color: white;
-        border: none;
-        padding: 12px 18px;
-        border-radius: 50px;
-        font-size: 16px;
-        cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        font-family: 'SolaimanLipi', sans-serif;
-        transition: 0.3s;
-    ">🔇 সাউন্ড চালু করুন</button>
-
     <script>
-        // মেনু টগল
         const toggleBtn = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
         toggleBtn.addEventListener('click', function() {
@@ -720,31 +695,7 @@
                 }
             });
         });
-
-        // অডিও কন্ট্রোল
-        document.addEventListener('DOMContentLoaded', function() {
-            const audio = document.getElementById('bg-music');
-            const btn = document.getElementById('unmute-btn');
-
-            // পেজ লোড হওয়ার পর অডিও শুরু হবে (মিউটেড)
-            audio.play().catch(() => {
-                // ব্রাউজার যদি অটোপ্লে ব্লক করে, কিছু করবেন না
-            });
-
-            btn.addEventListener('click', function() {
-                if (audio.muted) {
-                    audio.muted = false;
-                    btn.innerHTML = '🔊 সাউন্ড চালু আছে';
-                    btn.style.background = '#da291c';
-                } else {
-                    audio.muted = true;
-                    btn.innerHTML = '🔇 সাউন্ড বন্ধ';
-                    btn.style.background = '#006a4e';
-                }
-                // প্রথম ক্লিকে প্লে নিশ্চিত করা
-                audio.play();
-            });
-        });
     </script>
+
 </body>
 </html>
