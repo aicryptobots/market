@@ -15,7 +15,6 @@
             --flag-red: #da291c;
             --gold: #f4c430;
             --dark-green: #004d39;
-            --light-green: #e8f5ef;
             --shadow: 0 8px 30px rgba(0,0,0,0.12);
             --shadow-hover: 0 12px 40px rgba(0,0,0,0.2);
         }
@@ -333,7 +332,7 @@
             color: var(--flag-red);
         }
 
-        /* প্রফেশনাল যোগাযোগ সেকশন */
+        /* যোগাযোগ সেকশন */
         .contact-premium {
             background: linear-gradient(145deg, #ffffff, #f0f4f8);
             padding: 70px 20px;
@@ -341,9 +340,6 @@
             margin: 0 auto;
             max-width: 1100px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.06);
-        }
-        .contact-premium .section-title {
-            color: var(--flag-green);
         }
         .contact-grid {
             display: grid;
@@ -519,12 +515,78 @@
             margin: 0 12px;
             font-size: 0.95rem;
         }
+
+        /* 🎵 অডিও কন্ট্রোল বাটন */
+        .audio-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,106,78,0.2);
+        }
+        .audio-control:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+        }
+        .audio-control button {
+            background: var(--flag-green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'SolaimanLipi', 'Bangla', sans-serif;
+        }
+        .audio-control button:hover {
+            background: var(--flag-red);
+            transform: scale(1.05);
+        }
+        .audio-control .status {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+            min-width: 60px;
+            text-align: center;
+        }
+        .audio-control .status.playing {
+            color: var(--flag-green);
+        }
+        .audio-control .status.stopped {
+            color: var(--flag-red);
+        }
+        @media (max-width: 600px) {
+            .audio-control {
+                bottom: 20px;
+                right: 20px;
+                padding: 8px 14px;
+                gap: 8px;
+            }
+            .audio-control button {
+                padding: 8px 14px;
+                font-size: 0.9rem;
+            }
+            .audio-control .status {
+                font-size: 0.8rem;
+                min-width: 45px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🔉 অটো-প্লে অডিও -->
-    <audio src="your-song.mp3" autoplay loop hidden></audio>
+    <!-- 🎵 অডিও এলিমেন্ট -->
+    <audio id="bgAudio" src="audio/your-song.mp3" loop preload="auto"></audio>
 
     <nav>
         <a href="#" class="logo">ফেসলেস <span>ডেমোক্রেসি</span></a>
@@ -681,7 +743,14 @@
         </p>
     </footer>
 
+    <!-- 🎵 অডিও কন্ট্রোল বাটন (সবসময় দৃশ্যমান) -->
+    <div class="audio-control" id="audioControl">
+        <button id="audioToggleBtn">▶️ চালু</button>
+        <span class="status stopped" id="audioStatus">বন্ধ</span>
+    </div>
+
     <script>
+        // মেনু টগল
         const toggleBtn = document.getElementById('menuToggle');
         const navMenu = document.getElementById('navMenu');
         toggleBtn.addEventListener('click', function() {
@@ -694,6 +763,38 @@
                     navMenu.classList.remove('show');
                 }
             });
+        });
+
+        // 🎵 অডিও কন্ট্রোল
+        const audio = document.getElementById('bgAudio');
+        const toggleBtnAudio = document.getElementById('audioToggleBtn');
+        const audioStatus = document.getElementById('audioStatus');
+
+        // পেজ লোডে গান বন্ধ থাকবে
+        audio.pause();
+        audioStatus.textContent = 'বন্ধ';
+        audioStatus.className = 'status stopped';
+        toggleBtnAudio.textContent = '▶️ চালু';
+
+        toggleBtnAudio.addEventListener('click', function() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    toggleBtnAudio.textContent = '⏸️ বন্ধ';
+                    audioStatus.textContent = 'চালু';
+                    audioStatus.className = 'status playing';
+                }).catch((error) => {
+                    console.log('অডিও প্লে করতে সমস্যা:', error);
+                    // ব্যবহারকারী যদি প্রথমবার ক্লিক করেন তবুও কাজ করবে
+                    toggleBtnAudio.textContent = '▶️ চালু';
+                    audioStatus.textContent = 'বন্ধ';
+                    audioStatus.className = 'status stopped';
+                });
+            } else {
+                audio.pause();
+                toggleBtnAudio.textContent = '▶️ চালু';
+                audioStatus.textContent = 'বন্ধ';
+                audioStatus.className = 'status stopped';
+            }
         });
     </script>
 
