@@ -683,7 +683,6 @@
 
     <!-- ===== অটো-প্লে অডিও সেটআপ ===== -->
     <audio id="bg-music" loop muted>
-        <!-- আপনার অডিও ফাইলের পাথ এখানে দিন -->
         <source src="music.mp3" type="audio/mpeg">
         আপনার ব্রাউজার অডিও সাপোর্ট করে না।
     </audio>
@@ -721,28 +720,30 @@
             });
         });
 
-        // অডিও কন্ট্রোল
+        // অডিও কন্ট্রোল (নিশ্চিত সমাধান)
         document.addEventListener('DOMContentLoaded', function() {
             const audio = document.getElementById('bg-music');
             const btn = document.getElementById('unmute-btn');
 
-            // পেজ লোড হওয়ার পর অডিও শুরু হবে (মিউটেড)
-            audio.play().catch(() => {
-                // ব্রাউজার যদি অটোপ্লে ব্লক করে, কিছু করবেন না
-            });
+            // প্রথমবার পেজ লোডে অডিও লোড করুন কিন্তু প্লে করবেন না
+            audio.load();
 
+            // বাটন ক্লিক করলেই প্লে শুরু হবে
             btn.addEventListener('click', function() {
-                if (audio.muted) {
+                if (audio.paused) {
                     audio.muted = false;
-                    btn.innerHTML = '🔊 সাউন্ড চালু আছে';
-                    btn.style.background = '#da291c';
+                    audio.play().then(() => {
+                        btn.innerHTML = '🔊 সাউন্ড চালু আছে';
+                        btn.style.background = '#da291c';
+                    }).catch((error) => {
+                        console.error('অডিও প্লে করতে সমস্যা:', error);
+                        alert('অডিও প্লে করার অনুমতি দিন। দয়া করে পেজের যেকোনো জায়গায় ক্লিক করুন এবং আবার এই বাটনটি চাপুন।');
+                    });
                 } else {
-                    audio.muted = true;
+                    audio.pause();
                     btn.innerHTML = '🔇 সাউন্ড বন্ধ';
                     btn.style.background = '#006a4e';
                 }
-                // প্রথম ক্লিকে প্লে নিশ্চিত করা
-                audio.play();
             });
         });
     </script>
