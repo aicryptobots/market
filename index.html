@@ -89,14 +89,13 @@
             nav ul li a { padding: 12px; display: block; }
         }
 
-        /* Hero Section - মোবাইলের জন্য ১০০% ফিট */
+        /* Hero Section */
         .hero {
             position: relative;
             width: 100%;
-            min-height: 100vh; /* পুরো স্ক্রিন */
+            min-height: 100vh;
             height: auto;
-            /* এখানে আপনার ছবির পাথ দিন। প্লেসহোল্ডার হিসেবে একটি অনলাইন ছবি দিচ্ছি */
-            background-image: url('https://aicryptobots.github.io/market/your-family-photo.jpg');
+            background-image: url('your-family-photo.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -106,7 +105,6 @@
             text-align: center;
             padding: 30px 15px;
         }
-        /* অন্ধকার ওভারলে */
         .hero::before {
             content: '';
             position: absolute;
@@ -155,33 +153,14 @@
             transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 40px rgba(218, 41, 28, 0.5);
         }
-
-        /* ✅ মোবাইলের জন্য ফিক্স */
         @media (max-width: 700px) {
-            .hero {
-                min-height: 100vh;
-                height: 100%;
-                background-attachment: scroll;
-                padding: 40px 15px;
-                background-size: cover;
-                background-position: center;
-            }
-            .hero-content h1 {
-                font-size: 2.2rem;
-                margin-bottom: 15px;
-            }
-            .hero-content p {
-                font-size: 1rem;
-                line-height: 1.6;
-                margin-bottom: 20px;
-            }
-            .hero-content .btn-hero {
-                padding: 12px 30px;
-                font-size: 0.9rem;
-            }
+            .hero { min-height: 100vh; height: 100%; padding: 40px 15px; }
+            .hero-content h1 { font-size: 2.2rem; margin-bottom: 15px; }
+            .hero-content p { font-size: 1rem; line-height: 1.6; margin-bottom: 20px; }
+            .hero-content .btn-hero { padding: 12px 30px; font-size: 0.9rem; }
         }
 
-        /* অন্যান্য সেকশন (আগের মতো) */
+        /* সেকশন সাধারণ */
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -220,6 +199,8 @@
             margin: 0 auto 30px;
             line-height: 1.6;
         }
+
+        /* About */
         .about-text {
             text-align: center;
             max-width: 800px;
@@ -233,6 +214,8 @@
             box-shadow: var(--shadow);
             border-left: 5px solid var(--flag-green);
         }
+
+        /* 🎯 আমাদের লক্ষ্য - ৯টি কার্ড (৩টি নতুন) */
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -532,7 +515,7 @@
         </ul>
     </nav>
 
-    <!-- Hero Section (মোবাইলে ১০০% ফিট) -->
+    <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>আমরা ৭১-এর <span class="highlight">উত্তরসূরি!</span></h1>
@@ -554,7 +537,7 @@
         </div>
     </section>
 
-    <!-- Mission / Goals -->
+    <!-- 🎯 আমাদের লক্ষ্য (৯টি কার্ড) -->
     <section id="mission" class="container" style="background:#f8fffc; border-radius: var(--radius);">
         <div class="section-title-wrapper">
             <h2 class="section-title">আমাদের লক্ষ্য</h2>
@@ -590,6 +573,22 @@
                 <span class="icon-big">📢</span>
                 <h3>আন্তর্জাতিক সমর্থন অর্জন</h3>
                 <p>বাংলাদেশের গণতন্ত্র ও মুক্তিযুদ্ধের চেতনার পক্ষে বিশ্ববাসীর সমর্থন লাভের জন্য কূটনৈতিক ও মিডিয়া প্রচারণা চালানো।</p>
+            </div>
+            <!-- ✅ ৩টি নতুন লক্ষ্য -->
+            <div class="card">
+                <span class="icon-big">💻</span>
+                <h3>সাইবার অ্যাক্টিভিজম প্রশিক্ষণ</h3>
+                <p>পেজ খোলা, ফেসবুক নেগেটিভ চালানো, টেনামুল কর্মী থেকে নেতা হওয়ার পদ্ধতি শেখানো।</p>
+            </div>
+            <div class="card red-border">
+                <span class="icon-big">📖</span>
+                <h3>মুক্তিযুদ্ধের ইতিহাস ও সমসাময়িক পাঠ</h3>
+                <p>তরুণদের মুক্তিযুদ্ধের ইতিহাস ও বর্তমান রাজনীতি সম্পর্কে জ্ঞান দেওয়া।</p>
+            </div>
+            <div class="card">
+                <span class="icon-big">⚔️</span>
+                <h3>জামাত-বোট বিহীন নেগেটিভ ক্যাম্পেইন</h3>
+                <p>জামাত-বোটের বিরুদ্ধে নেগেটিভ ক্যাম্পেইন ও তাদের অপতৎপরতা রোধের কৌশল শেখানো।</p>
             </div>
         </div>
     </section>
@@ -674,8 +673,17 @@
         </div>
         <p style="font-size: 1.1rem; font-weight: 600;">&copy; ২০২৬ ফেসলেস ডেমোক্রেসি</p>
         <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">মুক্তিযুদ্ধের চেতনায় উদ্বুদ্ধ</p>
+        <div class="footer-links">
+            <a href="#home">হোম</a>
+            <a href="#about">আমাদের সম্পর্কে</a>
+            <a href="#mission">লক্ষ্য</a>
+            <a href="#muktijuddho">মুক্তিযুদ্ধ ও ৭১</a>
+            <a href="#contact">যোগাযোগ</a>
         </div>
         <div class="footer-social">
+            <a href="https://t.me/area71" target="_blank">✈️</a>
+            <a href="#" target="_blank">📘</a>
+            <a href="#" target="_blank">📘</a>
         </div>
         <p style="margin-top:15px; font-size:1.1rem; color:var(--gold); font-weight:800; letter-spacing: 1px;">
             জয় বাংলা, জয় বঙ্গবন্ধু
