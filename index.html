@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
     <title>ফেসলেস ডেমোক্রেসি | আমরা ৭১-এর উত্তরসূরি!</title>
     <!-- ফেভিকন (Favicon) - বাংলাদেশ পতাকার ইমোজি -->
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇧🇩</text></svg>">
@@ -28,7 +28,7 @@
         /* Navbar */
         nav {
             background: linear-gradient(135deg, var(--flag-green), var(--dark-green));
-            padding: 18px 30px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -40,51 +40,33 @@
         }
         nav .logo {
             color: white;
-            font-size: 26px;
+            font-size: 22px;
             font-weight: 800;
             text-decoration: none;
-            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         nav .logo span { color: var(--gold); }
-        nav .logo .flag-icon {
-            font-size: 28px;
-        }
+        nav .logo .flag-icon { font-size: 24px; }
         nav ul {
             list-style: none;
             display: flex;
-            gap: 25px;
+            gap: 15px;
             flex-wrap: wrap;
         }
         nav ul li a {
             color: rgba(255,255,255,0.9);
             text-decoration: none;
-            font-size: 16px;
-            padding: 8px 18px;
+            font-size: 15px;
+            padding: 6px 14px;
             border-radius: 30px;
             transition: all 0.3s ease;
             font-weight: 500;
-            position: relative;
-        }
-        nav ul li a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 0;
-            height: 2px;
-            background: var(--gold);
-            transition: width 0.3s ease;
         }
         nav ul li a:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
             color: white;
-        }
-        nav ul li a:hover::after {
-            width: 60%;
         }
         .menu-toggle {
             display: none;
@@ -100,20 +82,21 @@
                 width: 100%;
                 background: var(--dark-green);
                 padding: 15px 0;
-                border-radius: 0 0 16px 16px;
+                border-radius: 0 0 12px 12px;
             }
             nav ul.show { display: flex; }
             nav ul li { text-align: center; width: 100%; }
             nav ul li a { padding: 12px; display: block; }
-            nav ul li a::after { display: none; }
         }
 
-        /* Hero Section - ফিক্সড (মোবাইলের জন্য) */
+        /* Hero Section - মোবাইলের জন্য ১০০% ফিট */
         .hero {
             position: relative;
             width: 100%;
-            min-height: 100vh;
-            background-image: url('your-family-photo.jpg');
+            min-height: 100vh; /* পুরো স্ক্রিন */
+            height: auto;
+            /* এখানে আপনার ছবির পাথ দিন। প্লেসহোল্ডার হিসেবে একটি অনলাইন ছবি দিচ্ছি */
+            background-image: url('https://via.placeholder.com/1080x1920/006a4e/ffffff?text=Your+Image+Here');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -121,13 +104,9 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 20px;
-            animation: heroZoom 20s infinite alternate;
+            padding: 30px 15px;
         }
-        @keyframes heroZoom {
-            0% { background-size: 100% auto; }
-            100% { background-size: 110% auto; }
-        }
+        /* অন্ধকার ওভারলে */
         .hero::before {
             content: '';
             position: absolute;
@@ -135,7 +114,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
+            background: rgba(0, 0, 0, 0.55);
             z-index: 1;
         }
         .hero-content {
@@ -143,51 +122,49 @@
             z-index: 2;
             color: white;
             max-width: 900px;
-            padding: 0 20px;
+            padding: 0 10px;
         }
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 3.5rem;
             margin-bottom: 20px;
             text-shadow: 0 4px 20px rgba(0,0,0,0.6);
             font-weight: 800;
             line-height: 1.2;
         }
-        .hero-content h1 .highlight {
-            color: var(--gold);
-        }
+        .hero-content h1 .highlight { color: var(--gold); }
         .hero-content p {
-            font-size: 1.5rem;
-            line-height: 1.9;
+            font-size: 1.4rem;
+            line-height: 1.8;
             text-shadow: 0 2px 10px rgba(0,0,0,0.6);
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             font-weight: 400;
-            opacity: 0.95;
         }
         .hero-content .btn-hero {
             background: linear-gradient(135deg, var(--flag-red), #b81e14);
             color: white;
-            padding: 18px 55px;
+            padding: 16px 45px;
             text-decoration: none;
             font-weight: 700;
             border-radius: 50px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
             display: inline-block;
             box-shadow: 0 8px 30px rgba(218, 41, 28, 0.4);
-            letter-spacing: 1px;
         }
         .hero-content .btn-hero:hover {
-            transform: translateY(-4px) scale(1.02);
+            transform: translateY(-3px) scale(1.02);
             box-shadow: 0 12px 40px rgba(218, 41, 28, 0.5);
         }
+
+        /* ✅ মোবাইলের জন্য ফিক্স */
         @media (max-width: 700px) {
             .hero {
                 min-height: 100vh;
-                height: auto;
+                height: 100%;
                 background-attachment: scroll;
                 padding: 40px 15px;
+                background-size: cover;
+                background-position: center;
             }
             .hero-content h1 {
                 font-size: 2.2rem;
@@ -196,36 +173,36 @@
             .hero-content p {
                 font-size: 1rem;
                 line-height: 1.6;
-                margin-bottom: 25px;
+                margin-bottom: 20px;
             }
             .hero-content .btn-hero {
-                padding: 12px 35px;
+                padding: 12px 30px;
                 font-size: 0.9rem;
             }
         }
 
-        /* সেকশন সাধারণ */
+        /* অন্যান্য সেকশন (আগের মতো) */
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 60px 20px;
         }
         .section-title-wrapper {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
         }
         .section-title {
-            font-size: 2.6rem;
+            font-size: 2.2rem;
             color: var(--flag-green);
             position: relative;
             display: inline-block;
-            padding-bottom: 18px;
+            padding-bottom: 15px;
             font-weight: 700;
         }
         .section-title::after {
             content: '';
             display: block;
-            width: 80px;
+            width: 60px;
             height: 4px;
             background: linear-gradient(90deg, var(--flag-green), var(--flag-red));
             margin: 0 auto;
@@ -237,175 +214,141 @@
         }
         .section-subtitle {
             text-align: center;
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #666;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            line-height: 1.6;
         }
-
-        /* About */
         .about-text {
             text-align: center;
             max-width: 800px;
-            margin: 0 auto 30px;
-            font-size: 1.15rem;
-            line-height: 1.9;
+            margin: 0 auto;
+            font-size: 1.05rem;
+            line-height: 1.8;
             color: #333;
             background: white;
-            padding: 40px 30px;
+            padding: 30px 25px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border-left: 5px solid var(--flag-green);
         }
-
-        /* Mission Cards */
         .grid-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
             margin-top: 10px;
         }
         .card {
             background: white;
-            padding: 35px 30px;
+            padding: 25px 20px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             border-left: 5px solid var(--flag-green);
-            position: relative;
-            overflow: hidden;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--flag-green), var(--flag-red));
-            opacity: 0;
-            transition: opacity 0.4s ease;
         }
         .card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-5px);
             box-shadow: var(--shadow-hover);
-        }
-        .card:hover::before {
-            opacity: 1;
         }
         .card h3 {
             color: var(--flag-green);
-            margin-bottom: 12px;
-            font-size: 1.4rem;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
             font-weight: 700;
         }
         .card p {
             color: #555;
-            line-height: 1.8;
-            font-size: 1rem;
+            line-height: 1.6;
+            font-size: 0.95rem;
         }
-        .card.red-border {
-            border-left-color: var(--flag-red);
-        }
-        .card .icon-big {
-            font-size: 2.2rem;
-            display: block;
-            margin-bottom: 10px;
-        }
+        .card.red-border { border-left-color: var(--flag-red); }
+        .card .icon-big { font-size: 2rem; display: block; margin-bottom: 8px; }
 
         /* মুক্তিযুদ্ধ সেকশন */
         .muktijuddho-section {
             background: linear-gradient(135deg, #f8fffc, #e8f5ef);
-            padding: 80px 20px;
+            padding: 60px 20px;
         }
         .muktijuddho-content {
             max-width: 900px;
             margin: 0 auto;
         }
         .muktijuddho-content .intro-text {
-            font-size: 1.15rem;
-            line-height: 1.9;
-            margin-bottom: 40px;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
             color: #333;
             background: white;
-            padding: 30px;
+            padding: 25px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
         }
         .timeline {
             position: relative;
-            padding-left: 40px;
-            margin-top: 20px;
+            padding-left: 30px;
         }
         .timeline::before {
             content: '';
             position: absolute;
-            left: 14px;
+            left: 12px;
             top: 10px;
             bottom: 10px;
-            width: 4px;
+            width: 3px;
             background: linear-gradient(180deg, var(--flag-green), var(--flag-red));
             border-radius: 2px;
         }
         .timeline-item {
             position: relative;
-            margin-bottom: 35px;
-            padding-left: 35px;
+            margin-bottom: 25px;
+            padding-left: 25px;
             background: white;
-            padding: 25px 30px 25px 65px;
+            padding: 18px 20px 18px 45px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-        .timeline-item:hover {
-            transform: translateX(6px);
-            box-shadow: var(--shadow-hover);
         }
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -26px;
-            top: 24px;
-            width: 22px;
-            height: 22px;
+            left: -20px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             background: var(--flag-green);
-            border: 4px solid var(--flag-red);
-            box-shadow: 0 0 0 5px rgba(0,106,78,0.15);
+            border: 3px solid var(--flag-red);
+            box-shadow: 0 0 0 4px rgba(0,106,78,0.15);
             z-index: 2;
         }
         .timeline-item .date {
             font-weight: 700;
             color: var(--flag-green);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             display: block;
             margin-bottom: 4px;
         }
         .timeline-item .desc {
-            font-size: 1.05rem;
-            line-height: 1.7;
+            font-size: 0.95rem;
+            line-height: 1.6;
             color: #444;
         }
         .commitment-text {
-            margin-top: 40px;
-            font-size: 1.2rem;
-            line-height: 1.9;
+            margin-top: 30px;
+            font-size: 1.1rem;
+            line-height: 1.8;
             font-weight: 500;
             background: white;
-            padding: 30px 35px;
+            padding: 25px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
             border-left: 5px solid var(--flag-red);
         }
-        .commitment-text strong {
-            color: var(--flag-red);
-        }
+        .commitment-text strong { color: var(--flag-red); }
 
         /* Contact */
         .contact-premium {
             background: linear-gradient(145deg, #ffffff, #f0f4f8);
-            padding: 70px 30px;
+            padding: 50px 20px;
             border-radius: var(--radius);
             max-width: 1100px;
             margin: 0 auto;
@@ -414,165 +357,94 @@
         .contact-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            margin-top: 30px;
+            gap: 25px;
+            margin-top: 20px;
         }
         .contact-card {
             background: white;
-            padding: 35px 30px;
+            padding: 25px 20px;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            transition: all 0.4s ease;
+            transition: all 0.3s ease;
             text-align: center;
-            border: 1px solid rgba(0,106,78,0.08);
         }
-        .contact-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-hover);
-            border-color: var(--flag-green);
-        }
+        .contact-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
         .contact-card .icon-circle {
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 36px;
+            margin: 0 auto 15px;
+            font-size: 28px;
             color: white;
         }
-        .contact-card .icon-circle.telegram {
-            background: linear-gradient(135deg, #0088cc, #006699);
-        }
-        .contact-card .icon-circle.facebook {
-            background: linear-gradient(135deg, #1877f2, #0d5fa5);
-        }
+        .contact-card .icon-circle.telegram { background: linear-gradient(135deg, #0088cc, #006699); }
+        .contact-card .icon-circle.facebook { background: linear-gradient(135deg, #1877f2, #0d5fa5); }
         .contact-card h3 {
             color: var(--flag-green);
-            font-size: 1.4rem;
-            margin-bottom: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
         }
         .contact-card p {
             color: #666;
-            font-size: 1rem;
-            margin-bottom: 20px;
-            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
         }
         .btn-contact {
             display: inline-block;
-            padding: 14px 35px;
+            padding: 10px 25px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: 700;
-            font-size: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
             transition: all 0.3s ease;
             color: white;
-            letter-spacing: 0.5px;
         }
-        .btn-contact.telegram-btn {
-            background: linear-gradient(135deg, #0088cc, #006699);
-        }
-        .btn-contact.telegram-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(0,136,204,0.4);
-        }
-        .btn-contact.fb-btn {
-            background: linear-gradient(135deg, #1877f2, #0d5fa5);
-        }
-        .btn-contact.fb-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(24,119,242,0.4);
-        }
-        .btn-contact.fb-btn-alt {
-            background: linear-gradient(135deg, #4267b2, #2d4a8a);
-        }
-        .btn-contact.fb-btn-alt:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 25px rgba(66,103,178,0.4);
-        }
+        .btn-contact.telegram-btn { background: linear-gradient(135deg, #0088cc, #006699); }
+        .btn-contact.telegram-btn:hover { transform: scale(1.05); box-shadow: 0 6px 25px rgba(0,136,204,0.4); }
+        .btn-contact.fb-btn { background: linear-gradient(135deg, #1877f2, #0d5fa5); }
+        .btn-contact.fb-btn:hover { transform: scale(1.05); box-shadow: 0 6px 25px rgba(24,119,242,0.4); }
+        .btn-contact.fb-btn-alt { background: linear-gradient(135deg, #4267b2, #2d4a8a); }
+        .btn-contact.fb-btn-alt:hover { transform: scale(1.05); box-shadow: 0 6px 25px rgba(66,103,178,0.4); }
 
-        .facebook-group {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-            margin-top: 5px;
-        }
-        .facebook-group .btn-contact {
-            width: 100%;
-        }
+        .facebook-group { display: flex; flex-direction: column; gap: 10px; margin-top: 5px; }
+        .facebook-group .btn-contact { width: 100%; }
 
         .contact-extra {
-            margin-top: 40px;
+            margin-top: 30px;
             text-align: center;
-            padding: 30px;
+            padding: 20px;
             background: white;
             border-radius: var(--radius);
             box-shadow: var(--shadow);
-            border: 1px solid rgba(0,106,78,0.08);
         }
-        .contact-extra p {
-            font-size: 1.05rem;
-            line-height: 2;
-            color: #444;
-        }
-        .contact-extra a {
-            color: var(--flag-green);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .contact-extra a:hover {
-            color: var(--flag-red);
-        }
-        .contact-extra .highlight {
-            color: var(--flag-red);
-            font-weight: 600;
-        }
+        .contact-extra p { font-size: 0.95rem; line-height: 1.8; color: #444; }
+        .contact-extra a { color: var(--flag-green); text-decoration: none; font-weight: 600; }
+        .contact-extra a:hover { color: var(--flag-red); }
+        .contact-extra .highlight { color: var(--flag-red); font-weight: 600; }
 
         @media (max-width: 768px) {
-            .contact-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
-            }
-            .contact-card {
-                padding: 25px 20px;
-            }
-            .facebook-group .btn-contact {
-                width: 100%;
-            }
+            .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+            .contact-card { padding: 20px 15px; }
+            .facebook-group .btn-contact { width: 100%; }
         }
 
         /* Footer */
         footer {
             background: linear-gradient(135deg, var(--flag-green), var(--dark-green));
             color: white;
-            padding: 50px 20px;
+            padding: 40px 20px;
             text-align: center;
-            margin-top: 40px;
-            position: relative;
+            margin-top: 30px;
         }
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--gold), var(--flag-red), var(--gold));
-        }
-        footer a {
-            color: var(--gold);
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        footer a:hover {
-            color: #fff;
-        }
+        footer a { color: var(--gold); text-decoration: none; font-weight: 500; }
+        footer a:hover { color: #fff; }
         .footer-flag {
             display: inline-block;
-            width: 40px;
-            height: 25px;
+            width: 30px;
+            height: 20px;
             background: var(--flag-green);
             border-radius: 4px;
             position: relative;
@@ -583,8 +455,8 @@
         .footer-flag::after {
             content: '';
             display: block;
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             background: var(--flag-red);
             border-radius: 50%;
             position: absolute;
@@ -592,86 +464,51 @@
             left: 50%;
             transform: translate(-50%, -50%);
         }
-        .footer-links {
-            margin: 20px 0;
-        }
-        .footer-links a {
-            margin: 0 15px;
-            font-size: 0.95rem;
-        }
-        .footer-social {
-            margin-top: 15px;
-        }
-        .footer-social a {
-            margin: 0 8px;
-            font-size: 1.5rem;
-        }
+        .footer-links { margin: 15px 0; }
+        .footer-links a { margin: 0 10px; font-size: 0.85rem; }
+        .footer-social { margin-top: 10px; }
+        .footer-social a { margin: 0 6px; font-size: 1.2rem; }
 
         /* Audio Control */
         .audio-control {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
+            bottom: 20px;
+            right: 20px;
             z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
             background: white;
-            padding: 12px 22px;
+            padding: 8px 16px;
             border-radius: 50px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
             border: 1px solid rgba(0,106,78,0.15);
-            backdrop-filter: blur(10px);
-        }
-        .audio-control:hover {
-            transform: scale(1.02);
-            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
         }
         .audio-control button {
             background: var(--flag-green);
             color: white;
             border: none;
-            padding: 10px 22px;
+            padding: 8px 16px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s ease;
             font-family: 'SolaimanLipi', 'Bangla', sans-serif;
         }
-        .audio-control button:hover {
-            background: var(--flag-red);
-            transform: scale(1.05);
-        }
+        .audio-control button:hover { background: var(--flag-red); }
         .audio-control .status {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: 600;
             color: #333;
-            min-width: 60px;
+            min-width: 40px;
             text-align: center;
         }
-        .audio-control .status.playing {
-            color: var(--flag-green);
-        }
-        .audio-control .status.stopped {
-            color: var(--flag-red);
-        }
+        .audio-control .status.playing { color: var(--flag-green); }
+        .audio-control .status.stopped { color: var(--flag-red); }
         @media (max-width: 600px) {
-            .audio-control {
-                bottom: 20px;
-                right: 20px;
-                padding: 10px 16px;
-                gap: 8px;
-            }
-            .audio-control button {
-                padding: 8px 14px;
-                font-size: 0.85rem;
-            }
-            .audio-control .status {
-                font-size: 0.75rem;
-                min-width: 40px;
-            }
+            .audio-control { bottom: 15px; right: 15px; padding: 6px 12px; gap: 6px; }
+            .audio-control button { padding: 6px 12px; font-size: 0.8rem; }
+            .audio-control .status { font-size: 0.7rem; min-width: 35px; }
         }
     </style>
 </head>
@@ -695,12 +532,12 @@
         </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (মোবাইলে ১০০% ফিট) -->
     <section class="hero" id="home">
         <div class="hero-content">
             <h1>আমরা ৭১-এর <span class="highlight">উত্তরসূরি!</span></h1>
             <p>
-               বঙ্গবন্ধুর স্বপ্ন ও শেখ হাসিনার নেতৃত্বে গণতন্ত্রকে ফিরিয়ে আনতে মুক্তিযুদ্ধের আদর্শকে সামনে রেখে নতুন প্রজন্মকে জাগিয়ে তোলাই আমাদের অঙ্গীকার। <strong>ফেসলেস ডেমোক্রেসি</strong> – অনলাইন আন্দোলন থেকে পূর্ণ গণতন্ত্রের পথে।
+                বঙ্গবন্ধুর স্বপ্ন ও শেখ হাসিনার নেতৃত্বে গণতন্ত্রকে ফিরিয়ে আনতে মুক্তিযুদ্ধের আদর্শকে সামনে রেখে নতুন প্রজন্মকে জাগিয়ে তোলাই আমাদের অঙ্গীকার। <strong>ফেসলেস ডেমোক্রেসি</strong> – অনলাইন আন্দোলন থেকে পূর্ণ গণতন্ত্রের পথে।
             </p>
             <a href="#mission" class="btn-hero">আরও জানুন →</a>
         </div>
@@ -713,9 +550,7 @@
         </div>
         <div class="section-subtitle">জানুন কেন আমরা এই আন্দোলন শুরু করেছি</div>
         <div class="about-text">
-            <p><strong>ফেসলেস ডেমোক্রেসি</strong>২০২৪ সালের ৫ আগস্টের পর অনলাইনে যাত্রা শুরু করে। যখন দেশে মুক্তিযুদ্ধের শক্তি, আওয়ামী লীগ ও ছাত্রলীগের নামে অত্যাচার চলছিল, তখন আমরা নেতা-কর্মীদের পাশে দাঁড়াই। আমাদের লক্ষ্য – গণতন্ত্র, মুক্তিযুদ্ধের চেতনা ও ৭১-এর শক্তিকে পুনরুদ্ধার করা। আমরা বিশ্বাস করি, বঙ্গবন্ধুর স্বপ্ন ও শেখ হাসিনার নেতৃত্বে বাংলাদেশ আবার সঠিক পথে ফিরবে।
-
-ফেসলেস ডেমোক্রেসি—এটি শুধু একটি প্ল্যাটফর্ম নয়, এটি আদর্শ, বিশ্বাস ও গণতন্ত্র পুনরুদ্ধারের একটি অঙ্গীকার। </p>
+            <p><strong>ফেসলেস ডেমোক্রেসি</strong> ২০২৪ সালের ৫ আগস্টের পর অনলাইনে যাত্রা শুরু করে। যখন দেশে মুক্তিযুদ্ধের শক্তি, আওয়ামী লীগ ও ছাত্রলীগের নামে অত্যাচার চলছিল, তখন আমরা নেতা-কর্মীদের পাশে দাঁড়াই। আমাদের লক্ষ্য – গণতন্ত্র, মুক্তিযুদ্ধের চেতনা ও ৭১-এর শক্তিকে পুনরুদ্ধার করা। আমরা বিশ্বাস করি, বঙ্গবন্ধুর স্বপ্ন ও শেখ হাসিনার নেতৃত্বে বাংলাদেশ আবার সঠিক পথে ফিরবে।</p>
         </div>
     </section>
 
@@ -728,8 +563,7 @@
         <div class="grid-2">
             <div class="card">
                 <span class="icon-big">🇧🇩</span>
-                <h3>মুক্তিযুদ্ধের চেতনা পুনরুদ্ধার
-</h3>
+                <h3>মুক্তিযুদ্ধের চেতনা পুনরুদ্ধার</h3>
                 <p>মুক্তিযুদ্ধের ইতিহাস, বঙ্গবন্ধুর ভাষণ ও ৭১-এর সঠিক তথ্য প্রচার করে দেশের মানুষের মধ্যে দেশপ্রেম জাগ্রত করা।</p>
             </div>
             <div class="card red-border">
@@ -776,7 +610,7 @@
                     <span class="desc">বঙ্গবন্ধুর ঐতিহাসিক ভাষণ – “এবারের সংগ্রাম আমাদের মুক্তির সংগ্রাম”</span>
                 </div>
                 <div class="timeline-item">
-                    <span class="date">২৬ মার্চ ১৯৭۱</span>
+                    <span class="date">২৬ মার্চ ১৯৭১</span>
                     <span class="desc">স্বাধীনতা ঘোষণা – পাকিস্তানি হানাদার বাহিনীর বিরুদ্ধে সশস্ত্র প্রতিরোধ শুরু</span>
                 </div>
                 <div class="timeline-item">
@@ -824,7 +658,7 @@
                     <strong>ইমেইল:</strong> <a href="mailto:info@facelessdemocracy.com">info@facelessdemocracy.com</a> &nbsp;|&nbsp;
                     <strong>হটলাইন (নেতা-কর্মীদের জন্য):</strong> <span class="highlight">+880-XXXXXXXXXX</span>
                 </p>
-                <p style="margin-top: 8px; font-size: 0.95rem; color: #666;">
+                <p style="margin-top: 8px; font-size: 0.9rem; color: #666;">
                     আপনার কোনো সমস্যা বা পরামর্শ থাকলে আমাদের জানান। আমরা পাশে আছি।
                 </p>
             </div>
@@ -833,13 +667,13 @@
 
     <!-- Footer -->
     <footer>
-        <div style="display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:20px;">
-            <span style="font-size: 2rem;">🇧🇩</span>
+        <div style="display:flex; align-items:center; justify-content:center; gap:8px; flex-wrap:wrap; margin-bottom:15px;">
+            <span style="font-size: 1.5rem;">🇧🇩</span>
             <span class="footer-flag"></span>
-            <span style="font-size: 2rem;">🇧🇩</span>
+            <span style="font-size: 1.5rem;">🇧🇩</span>
         </div>
-        <p style="font-size: 1.2rem; font-weight: 600;">&copy; ২০২৬ ফেসলেস ডেমোক্রেসি</p>
-        <p style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 5px;">মুক্তিযুদ্ধের চেতনায় উদ্বুদ্ধ</p>
+        <p style="font-size: 1.1rem; font-weight: 600;">&copy; ২০২৬ ফেসলেস ডেমোক্রেসি</p>
+        <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;">মুক্তিযুদ্ধের চেতনায় উদ্বুদ্ধ</p>
         <div class="footer-links">
             <a href="#home">হোম</a>
             <a href="#about">আমাদের সম্পর্কে</a>
@@ -852,7 +686,7 @@
             <a href="#" target="_blank">📘</a>
             <a href="#" target="_blank">📘</a>
         </div>
-        <p style="margin-top:18px; font-size:1.2rem; color:var(--gold); font-weight:800; letter-spacing: 2px;">
+        <p style="margin-top:15px; font-size:1.1rem; color:var(--gold); font-weight:800; letter-spacing: 1px;">
             জয় বাংলা, জয় বঙ্গবন্ধু
         </p>
     </footer>
