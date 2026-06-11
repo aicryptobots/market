@@ -25,7 +25,7 @@
             --radius: 16px;
         }
 
-        /* Navbar প্রফেশনাল */
+        /* Navbar */
         nav {
             background: linear-gradient(135deg, var(--flag-green), var(--dark-green));
             padding: 18px 30px;
@@ -108,14 +108,14 @@
             nav ul li a::after { display: none; }
         }
 
-        /* Hero Section - সিনেমাটিক */
+        /* Hero Section - ফিক্সড (মোবাইলের জন্য) */
         .hero {
             position: relative;
             width: 100%;
-            height: 100vh;
+            min-height: 100vh;
             background-image: url('your-family-photo.jpg');
             background-size: cover;
-            background-position: center;
+            background-position: center center;
             background-repeat: no-repeat;
             display: flex;
             align-items: center;
@@ -183,9 +183,25 @@
             box-shadow: 0 12px 40px rgba(218, 41, 28, 0.5);
         }
         @media (max-width: 700px) {
-            .hero-content h1 { font-size: 2.5rem; }
-            .hero-content p { font-size: 1.1rem; }
-            .hero-content .btn-hero { padding: 14px 35px; font-size: 1rem; }
+            .hero {
+                min-height: 100vh;
+                height: auto;
+                background-attachment: scroll;
+                padding: 40px 15px;
+            }
+            .hero-content h1 {
+                font-size: 2.2rem;
+                margin-bottom: 15px;
+            }
+            .hero-content p {
+                font-size: 1rem;
+                line-height: 1.6;
+                margin-bottom: 25px;
+            }
+            .hero-content .btn-hero {
+                padding: 12px 35px;
+                font-size: 0.9rem;
+            }
         }
 
         /* সেকশন সাধারণ */
@@ -243,7 +259,7 @@
             border-left: 5px solid var(--flag-green);
         }
 
-        /* Mission Cards - প্রফেশনাল গ্রিড */
+        /* Mission Cards */
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -386,7 +402,7 @@
             color: var(--flag-red);
         }
 
-        /* Contact - প্রফেশনাল */
+        /* Contact */
         .contact-premium {
             background: linear-gradient(145deg, #ffffff, #f0f4f8);
             padding: 70px 30px;
@@ -526,7 +542,7 @@
             }
         }
 
-        /* Footer - প্রফেশনাল */
+        /* Footer */
         footer {
             background: linear-gradient(135deg, var(--flag-green), var(--dark-green));
             color: white;
@@ -591,7 +607,7 @@
             font-size: 1.5rem;
         }
 
-        /* Audio Control - প্রফেশনাল */
+        /* Audio Control */
         .audio-control {
             position: fixed;
             bottom: 30px;
@@ -760,7 +776,7 @@
                     <span class="desc">বঙ্গবন্ধুর ঐতিহাসিক ভাষণ – “এবারের সংগ্রাম আমাদের মুক্তির সংগ্রাম”</span>
                 </div>
                 <div class="timeline-item">
-                    <span class="date">২৬ মার্চ ১৯৭১</span>
+                    <span class="date">২৬ মার্চ ১৯৭۱</span>
                     <span class="desc">স্বাধীনতা ঘোষণা – পাকিস্তানি হানাদার বাহিনীর বিরুদ্ধে সশস্ত্র প্রতিরোধ শুরু</span>
                 </div>
                 <div class="timeline-item">
