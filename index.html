@@ -4,25 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ফেসলেস ডেমোক্রেসি | মুক্তিযুদ্ধের চেতনা পুনরুদ্ধার</title>
+    <!-- ফেভিকন (Favicon) - বাংলাদেশ পতাকার ইমোজি -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇧🇩</text></svg>">
+    
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
         body {
             font-family: 'SolaimanLipi', 'Bangla', 'Arial', sans-serif;
             background-color: #f4f6f9;
+            scroll-behavior: smooth;
         }
         :root {
             --flag-green: #006a4e;
             --flag-red: #da291c;
             --gold: #f4c430;
             --dark-green: #004d39;
+            --light-green: #e8f5ef;
             --shadow: 0 8px 30px rgba(0,0,0,0.12);
             --shadow-hover: 0 12px 40px rgba(0,0,0,0.2);
+            --radius: 16px;
         }
 
-        /* Navbar */
+        /* Navbar প্রফেশনাল */
         nav {
-            background-color: rgba(0, 106, 78, 0.9);
-            padding: 15px 30px;
+            background: linear-gradient(135deg, var(--flag-green), var(--dark-green));
+            padding: 18px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -30,36 +36,55 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(8px);
-            box-shadow: 0 2px 15px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
         nav .logo {
             color: white;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 26px;
+            font-weight: 800;
             text-decoration: none;
             letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         nav .logo span { color: var(--gold); }
+        nav .logo .flag-icon {
+            font-size: 28px;
+        }
         nav ul {
             list-style: none;
             display: flex;
-            gap: 20px;
+            gap: 25px;
             flex-wrap: wrap;
         }
         nav ul li a {
-            color: white;
+            color: rgba(255,255,255,0.9);
             text-decoration: none;
             font-size: 16px;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 30px;
             transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
+        }
+        nav ul li a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
         }
         nav ul li a:hover {
-            background-color: var(--gold);
-            color: var(--flag-green);
-            transform: translateY(-2px);
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        nav ul li a:hover::after {
+            width: 60%;
         }
         .menu-toggle {
             display: none;
@@ -73,16 +98,17 @@
                 display: none;
                 flex-direction: column;
                 width: 100%;
-                background-color: var(--dark-green);
+                background: var(--dark-green);
                 padding: 15px 0;
-                border-radius: 0 0 12px 12px;
+                border-radius: 0 0 16px 16px;
             }
             nav ul.show { display: flex; }
             nav ul li { text-align: center; width: 100%; }
             nav ul li a { padding: 12px; display: block; }
+            nav ul li a::after { display: none; }
         }
 
-        /* Hero Section */
+        /* Hero Section - সিনেমাটিক */
         .hero {
             position: relative;
             width: 100%;
@@ -96,6 +122,11 @@
             justify-content: center;
             text-align: center;
             padding: 20px;
+            animation: heroZoom 20s infinite alternate;
+        }
+        @keyframes heroZoom {
+            0% { background-size: 100% auto; }
+            100% { background-size: 110% auto; }
         }
         .hero::before {
             content: '';
@@ -104,7 +135,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%);
             z-index: 1;
         }
         .hero-content {
@@ -112,73 +143,89 @@
             z-index: 2;
             color: white;
             max-width: 900px;
+            padding: 0 20px;
         }
         .hero-content h1 {
-            font-size: 3.8rem;
+            font-size: 4rem;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-            font-weight: 700;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .hero-content h1 .highlight {
+            color: var(--gold);
         }
         .hero-content p {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             line-height: 1.9;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
             margin-bottom: 35px;
             font-weight: 400;
+            opacity: 0.95;
         }
         .hero-content .btn-hero {
             background: linear-gradient(135deg, var(--flag-red), #b81e14);
             color: white;
-            padding: 16px 50px;
+            padding: 18px 55px;
             text-decoration: none;
-            font-weight: bold;
+            font-weight: 700;
             border-radius: 50px;
             font-size: 1.2rem;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
             display: inline-block;
-            box-shadow: 0 4px 20px rgba(218, 41, 28, 0.4);
+            box-shadow: 0 8px 30px rgba(218, 41, 28, 0.4);
+            letter-spacing: 1px;
         }
         .hero-content .btn-hero:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 6px 30px rgba(218, 41, 28, 0.5);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 12px 40px rgba(218, 41, 28, 0.5);
         }
         @media (max-width: 700px) {
-            .hero-content h1 { font-size: 2.2rem; }
+            .hero-content h1 { font-size: 2.5rem; }
             .hero-content p { font-size: 1.1rem; }
+            .hero-content .btn-hero { padding: 14px 35px; font-size: 1rem; }
         }
 
-        /* সাধারণ সেকশন */
+        /* সেকশন সাধারণ */
         .container {
             max-width: 1100px;
             margin: 0 auto;
-            padding: 70px 20px;
+            padding: 80px 20px;
+        }
+        .section-title-wrapper {
+            text-align: center;
+            margin-bottom: 50px;
         }
         .section-title {
-            text-align: center;
-            font-size: 2.4rem;
-            margin-bottom: 50px;
+            font-size: 2.6rem;
             color: var(--flag-green);
             position: relative;
             display: inline-block;
-            padding-bottom: 15px;
+            padding-bottom: 18px;
+            font-weight: 700;
         }
         .section-title::after {
             content: '';
             display: block;
-            width: 70px;
+            width: 80px;
             height: 4px;
-            background: var(--flag-red);
+            background: linear-gradient(90deg, var(--flag-green), var(--flag-red));
             margin: 0 auto;
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
+            border-radius: 2px;
         }
-        .section-title-wrapper {
+        .section-subtitle {
             text-align: center;
-            margin-bottom: 20px;
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
         }
 
         /* About */
@@ -189,19 +236,24 @@
             font-size: 1.15rem;
             line-height: 1.9;
             color: #333;
+            background: white;
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--flag-green);
         }
 
-        /* Mission Cards */
+        /* Mission Cards - প্রফেশনাল গ্রিড */
         .grid-2 {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 30px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
         .card {
             background: white;
-            padding: 30px 25px;
-            border-radius: 16px;
+            padding: 35px 30px;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
             transition: all 0.4s ease;
             border-left: 5px solid var(--flag-green);
@@ -214,13 +266,13 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 4px;
+            height: 5px;
             background: linear-gradient(90deg, var(--flag-green), var(--flag-red));
             opacity: 0;
             transition: opacity 0.4s ease;
         }
         .card:hover {
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             box-shadow: var(--shadow-hover);
         }
         .card:hover::before {
@@ -229,48 +281,51 @@
         .card h3 {
             color: var(--flag-green);
             margin-bottom: 12px;
-            font-size: 1.3rem;
+            font-size: 1.4rem;
+            font-weight: 700;
         }
         .card p {
             color: #555;
-            line-height: 1.7;
+            line-height: 1.8;
             font-size: 1rem;
         }
         .card.red-border {
             border-left-color: var(--flag-red);
         }
+        .card .icon-big {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: 10px;
+        }
 
         /* মুক্তিযুদ্ধ সেকশন */
         .muktijuddho-section {
             background: linear-gradient(135deg, #f8fffc, #e8f5ef);
-            padding: 70px 20px;
+            padding: 80px 20px;
         }
         .muktijuddho-content {
             max-width: 900px;
             margin: 0 auto;
         }
-        .muktijuddho-content h2 {
-            color: var(--flag-green);
-            font-size: 2.6rem;
-            border-bottom: 4px solid var(--flag-red);
-            display: inline-block;
-            padding-bottom: 8px;
-            margin-bottom: 25px;
-        }
         .muktijuddho-content .intro-text {
             font-size: 1.15rem;
             line-height: 1.9;
-            margin-bottom: 35px;
+            margin-bottom: 40px;
             color: #333;
+            background: white;
+            padding: 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
         }
         .timeline {
             position: relative;
-            padding-left: 35px;
+            padding-left: 40px;
+            margin-top: 20px;
         }
         .timeline::before {
             content: '';
             position: absolute;
-            left: 12px;
+            left: 14px;
             top: 10px;
             bottom: 10px;
             width: 4px;
@@ -279,29 +334,29 @@
         }
         .timeline-item {
             position: relative;
-            margin-bottom: 40px;
-            padding-left: 30px;
+            margin-bottom: 35px;
+            padding-left: 35px;
             background: white;
-            padding: 20px 25px 20px 55px;
-            border-radius: 12px;
+            padding: 25px 30px 25px 65px;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
             transition: all 0.3s ease;
         }
         .timeline-item:hover {
-            transform: translateX(5px);
+            transform: translateX(6px);
             box-shadow: var(--shadow-hover);
         }
         .timeline-item::before {
             content: '';
             position: absolute;
-            left: -24px;
-            top: 22px;
-            width: 20px;
-            height: 20px;
+            left: -26px;
+            top: 24px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: var(--flag-green);
             border: 4px solid var(--flag-red);
-            box-shadow: 0 0 0 4px rgba(0,106,78,0.15);
+            box-shadow: 0 0 0 5px rgba(0,106,78,0.15);
             z-index: 2;
         }
         .timeline-item .date {
@@ -321,24 +376,23 @@
             font-size: 1.2rem;
             line-height: 1.9;
             font-weight: 500;
-            border-top: 3px solid var(--flag-green);
-            padding-top: 30px;
             background: white;
             padding: 30px 35px;
-            border-radius: 16px;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
+            border-left: 5px solid var(--flag-red);
         }
         .commitment-text strong {
             color: var(--flag-red);
         }
 
-        /* যোগাযোগ সেকশন */
+        /* Contact - প্রফেশনাল */
         .contact-premium {
             background: linear-gradient(145deg, #ffffff, #f0f4f8);
-            padding: 70px 20px;
-            border-radius: 24px;
-            margin: 0 auto;
+            padding: 70px 30px;
+            border-radius: var(--radius);
             max-width: 1100px;
+            margin: 0 auto;
             box-shadow: 0 10px 40px rgba(0,0,0,0.06);
         }
         .contact-grid {
@@ -350,26 +404,26 @@
         .contact-card {
             background: white;
             padding: 35px 30px;
-            border-radius: 20px;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
             transition: all 0.4s ease;
             text-align: center;
             border: 1px solid rgba(0,106,78,0.08);
         }
         .contact-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-hover);
             border-color: var(--flag-green);
         }
         .contact-card .icon-circle {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 18px;
-            font-size: 32px;
+            margin: 0 auto 20px;
+            font-size: 36px;
             color: white;
         }
         .contact-card .icon-circle.telegram {
@@ -380,23 +434,25 @@
         }
         .contact-card h3 {
             color: var(--flag-green);
-            font-size: 1.3rem;
-            margin-bottom: 8px;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
         }
         .contact-card p {
             color: #666;
             font-size: 1rem;
-            margin-bottom: 18px;
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
         .btn-contact {
             display: inline-block;
-            padding: 12px 32px;
+            padding: 14px 35px;
             border-radius: 50px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             font-size: 1rem;
             transition: all 0.3s ease;
             color: white;
+            letter-spacing: 0.5px;
         }
         .btn-contact.telegram-btn {
             background: linear-gradient(135deg, #0088cc, #006699);
@@ -423,7 +479,7 @@
         .facebook-group {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
             margin-top: 5px;
         }
         .facebook-group .btn-contact {
@@ -435,7 +491,7 @@
             text-align: center;
             padding: 30px;
             background: white;
-            border-radius: 20px;
+            border-radius: var(--radius);
             box-shadow: var(--shadow);
             border: 1px solid rgba(0,106,78,0.08);
         }
@@ -470,18 +526,29 @@
             }
         }
 
-        /* Footer */
+        /* Footer - প্রফেশনাল */
         footer {
             background: linear-gradient(135deg, var(--flag-green), var(--dark-green));
             color: white;
-            padding: 40px 20px;
+            padding: 50px 20px;
             text-align: center;
             margin-top: 40px;
+            position: relative;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--flag-red), var(--gold));
         }
         footer a {
             color: var(--gold);
             text-decoration: none;
             font-weight: 500;
+            transition: color 0.3s;
         }
         footer a:hover {
             color: #fff;
@@ -495,6 +562,7 @@
             position: relative;
             margin: 0 5px;
             vertical-align: middle;
+            border: 1px solid rgba(255,255,255,0.2);
         }
         .footer-flag::after {
             content: '';
@@ -509,14 +577,21 @@
             transform: translate(-50%, -50%);
         }
         .footer-links {
-            margin: 15px 0;
+            margin: 20px 0;
         }
         .footer-links a {
-            margin: 0 12px;
+            margin: 0 15px;
             font-size: 0.95rem;
         }
+        .footer-social {
+            margin-top: 15px;
+        }
+        .footer-social a {
+            margin: 0 8px;
+            font-size: 1.5rem;
+        }
 
-        /* 🎵 অডিও কন্ট্রোল বাটন - আরও উন্নত */
+        /* Audio Control - প্রফেশনাল */
         .audio-control {
             position: fixed;
             bottom: 30px;
@@ -524,26 +599,27 @@
             z-index: 9999;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             background: white;
-            padding: 12px 20px;
+            padding: 12px 22px;
             border-radius: 50px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
-            border: 1px solid rgba(0,106,78,0.2);
+            border: 1px solid rgba(0,106,78,0.15);
+            backdrop-filter: blur(10px);
         }
         .audio-control:hover {
             transform: scale(1.02);
-            box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
         }
         .audio-control button {
             background: var(--flag-green);
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px 22px;
             border-radius: 50px;
             font-size: 1rem;
-            font-weight: bold;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.3s ease;
             font-family: 'SolaimanLipi', 'Bangla', sans-serif;
@@ -569,16 +645,16 @@
             .audio-control {
                 bottom: 20px;
                 right: 20px;
-                padding: 8px 14px;
+                padding: 10px 16px;
                 gap: 8px;
             }
             .audio-control button {
                 padding: 8px 14px;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
             .audio-control .status {
-                font-size: 0.8rem;
-                min-width: 45px;
+                font-size: 0.75rem;
+                min-width: 40px;
             }
         }
     </style>
@@ -589,7 +665,10 @@
     <audio id="bgAudio" src="your-song.mp3" loop preload="auto"></audio>
 
     <nav>
-        <a href="#" class="logo">ফেসলেস <span>ডেমোক্রেসি</span></a>
+        <a href="#" class="logo">
+            <span class="flag-icon">🇧🇩</span>
+            ফেসলেস <span>ডেমোক্রেসি</span>
+        </a>
         <div class="menu-toggle" id="menuToggle">☰</div>
         <ul id="navMenu">
             <li><a href="#home">হোম</a></li>
@@ -603,12 +682,12 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1>মুক্তিযুদ্ধের চেতনা পুনরুদ্ধার</h1>
+            <h1>মুক্তিযুদ্ধের চেতনা <span class="highlight">পুনরুদ্ধার</span></h1>
             <p>
                 আমরা ৭১-এর শক্তি, বঙ্গবন্ধুর স্বপ্ন ও শেখ হাসিনার নেতৃত্বে গণতন্ত্রকে ফিরিয়ে আনতে কাজ করছি।<br>
                 <strong>ফেসলেস ডেমোক্রেসি</strong> – অনলাইন আন্দোলন থেকে পূর্ণ গণতন্ত্রের পথে।
             </p>
-            <a href="#mission" class="btn-hero">আরও জানুন</a>
+            <a href="#mission" class="btn-hero">আরও জানুন →</a>
         </div>
     </section>
 
@@ -617,39 +696,47 @@
         <div class="section-title-wrapper">
             <h2 class="section-title">আমাদের সম্পর্কে</h2>
         </div>
+        <div class="section-subtitle">জানুন কেন আমরা এই আন্দোলন শুরু করেছি</div>
         <div class="about-text">
             <p><strong>ফেসলেস ডেমোক্রেসি</strong> ২০২৪ সালের ৫ আগস্টের পর অনলাইনে যাত্রা শুরু করে। যখন দেশে মুক্তিযুদ্ধের শক্তি, আওয়ামী লীগ ও ছাত্রলীগের নামে অত্যাচার চলছিল, তখন আমরা নেতা-কর্মীদের পাশে দাঁড়াই। আমাদের লক্ষ্য – গণতন্ত্র, মুক্তিযুদ্ধের চেতনা ও ৭১-এর শক্তিকে পুনরুদ্ধার করা। আমরা বিশ্বাস করি, বঙ্গবন্ধুর স্বপ্ন ও শেখ হাসিনার নেতৃত্বে বাংলাদেশ আবার সঠিক পথে ফিরবে।</p>
         </div>
     </section>
 
     <!-- Mission / Goals -->
-    <section id="mission" class="container" style="background:#f8fffc; border-radius: 24px; padding: 70px 20px;">
+    <section id="mission" class="container" style="background:#f8fffc; border-radius: var(--radius);">
         <div class="section-title-wrapper">
             <h2 class="section-title">আমাদের লক্ষ্য</h2>
         </div>
+        <div class="section-subtitle">আমরা যে লক্ষ্যগুলো নিয়ে কাজ করছি</div>
         <div class="grid-2">
             <div class="card">
-                <h3>🇧🇩 মুক্তিযুদ্ধের চেতনা পুনরুদ্ধার</h3>
+                <span class="icon-big">🇧🇩</span>
+                <h3>মুক্তিযুদ্ধের চেতনা পুনরুদ্ধার</h3>
                 <p>মুক্তিযুদ্ধের ইতিহাস, বঙ্গবন্ধুর ভাষণ ও ৭১-এর সঠিক তথ্য প্রচার করে দেশের মানুষের মধ্যে দেশপ্রেম জাগ্রত করা।</p>
             </div>
             <div class="card red-border">
-                <h3>🗳️ গণতন্ত্র পুনরুদ্ধার</h3>
+                <span class="icon-big">🗳️</span>
+                <h3>গণতন্ত্র পুনরুদ্ধার</h3>
                 <p>সুষ্ঠু নির্বাচন, আইনের শাসন ও শেখ হাসিনার নেতৃত্বে আওয়ামী লীগকে পুনরায় রাজনৈতিক অঙ্গনে ফিরিয়ে আনা।</p>
             </div>
             <div class="card">
-                <h3>🤝 নেতা-কর্মীদের সুরক্ষা</h3>
+                <span class="icon-big">🤝</span>
+                <h3>নেতা-কর্মীদের সুরক্ষা</h3>
                 <p>আওয়ামী লীগ ও ছাত্রলীগের নেতা-কর্মীদের আইনি সহায়তা, মানসিক সমর্থন ও নিরাপত্তা প্রদান।</p>
             </div>
             <div class="card red-border">
-                <h3>📡 অনলাইন নেটওয়ার্ক শক্তিশালীকরণ</h3>
+                <span class="icon-big">📡</span>
+                <h3>অনলাইন নেটওয়ার্ক শক্তিশালীকরণ</h3>
                 <p>টেলিগ্রাম, ফেসবুক ও অন্যান্য প্ল্যাটফর্মে সংগঠিত হয়ে সত্য ও ন্যায়ের পক্ষে জনমত গঠন করা।</p>
             </div>
             <div class="card">
-                <h3>🏛️ বঙ্গবন্ধুর স্বপ্ন বাস্তবায়ন</h3>
+                <span class="icon-big">🏛️</span>
+                <h3>বঙ্গবন্ধুর স্বপ্ন বাস্তবায়ন</h3>
                 <p>সোনার বাংলা গড়ার লক্ষ্যে বঙ্গবন্ধুর আদর্শ ও রাষ্ট্রচিন্তাকে জনমনে পুনঃপ্রতিষ্ঠা করা।</p>
             </div>
             <div class="card red-border">
-                <h3>📢 আন্তর্জাতিক সমর্থন অর্জন</h3>
+                <span class="icon-big">📢</span>
+                <h3>আন্তর্জাতিক সমর্থন অর্জন</h3>
                 <p>বাংলাদেশের গণতন্ত্র ও মুক্তিযুদ্ধের চেতনার পক্ষে বিশ্ববাসীর সমর্থন লাভের জন্য কূটনৈতিক ও মিডিয়া প্রচারণা চালানো।</p>
             </div>
         </div>
@@ -658,7 +745,9 @@
     <!-- মুক্তিযুদ্ধ ও ৭১ সেকশন -->
     <section id="muktijuddho" class="muktijuddho-section">
         <div class="muktijuddho-content">
-            <h2>মুক্তিযুদ্ধ ও ৭১</h2>
+            <div class="section-title-wrapper">
+                <h2 class="section-title">মুক্তিযুদ্ধ ও ৭১</h2>
+            </div>
             <p class="intro-text">
                 ১৯৭১ সালের মহান মুক্তিযুদ্ধ আমাদের জাতির গৌরব। সেই যুদ্ধে ৩০ লক্ষ শহীদ ও ২ লক্ষ মা-বোনের আত্মত্যাগের বিনিময়ে আমরা পেয়েছি স্বাধীন বাংলাদেশ। বঙ্গবন্ধু শেখ মুজিবুর রহমানের নেতৃত্বেই এই যুদ্ধ সংঘটিত হয়েছিল।
             </p>
@@ -690,6 +779,7 @@
             <div class="section-title-wrapper">
                 <h2 class="section-title">যোগাযোগ ও চ্যানেল</h2>
             </div>
+            <div class="section-subtitle">আমাদের সাথে যুক্ত থাকুন</div>
 
             <div class="contact-grid">
                 <div class="contact-card">
@@ -725,12 +815,13 @@
 
     <!-- Footer -->
     <footer>
-        <div style="display:flex; align-items:center; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:15px;">
-            <span>🇧🇩</span>
+        <div style="display:flex; align-items:center; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:20px;">
+            <span style="font-size: 2rem;">🇧🇩</span>
             <span class="footer-flag"></span>
-            <span>🇧🇩</span>
+            <span style="font-size: 2rem;">🇧🇩</span>
         </div>
-        <p style="font-size: 1.1rem; font-weight: 500;">&copy; ২০২৬ ফেসলেস ডেমোক্রেসি। মুক্তিযুদ্ধের চেতনায় উদ্বুদ্ধ।</p>
+        <p style="font-size: 1.2rem; font-weight: 600;">&copy; ২০২৬ ফেসলেস ডেমোক্রেসি</p>
+        <p style="font-size: 0.95rem; opacity: 0.8; margin-bottom: 5px;">মুক্তিযুদ্ধের চেতনায় উদ্বুদ্ধ</p>
         <div class="footer-links">
             <a href="#home">হোম</a>
             <a href="#about">আমাদের সম্পর্কে</a>
@@ -738,7 +829,12 @@
             <a href="#muktijuddho">মুক্তিযুদ্ধ ও ৭১</a>
             <a href="#contact">যোগাযোগ</a>
         </div>
-        <p style="margin-top:12px; font-size:1.1rem; color:var(--gold); font-weight:700; letter-spacing: 1px;">
+        <div class="footer-social">
+            <a href="https://t.me/area71" target="_blank">✈️</a>
+            <a href="#" target="_blank">📘</a>
+            <a href="#" target="_blank">📘</a>
+        </div>
+        <p style="margin-top:18px; font-size:1.2rem; color:var(--gold); font-weight:800; letter-spacing: 2px;">
             জয় বাংলা, জয় বঙ্গবন্ধু
         </p>
     </footer>
@@ -765,7 +861,7 @@
             });
         });
 
-        // 🎵 অডিও কন্ট্রোল - ফিক্সড সংস্করণ
+        // 🎵 অডিও কন্ট্রোল
         const audio = document.getElementById('bgAudio');
         const toggleBtnAudio = document.getElementById('audioToggleBtn');
         const audioStatus = document.getElementById('audioStatus');
@@ -776,7 +872,6 @@
         audioStatus.className = 'status stopped';
         toggleBtnAudio.textContent = '▶️ চালু';
 
-        // পেজ লোড হওয়ার পর প্রথম ক্লিক (যেকোনো জায়গায়) গান চালু করবে
         let audioStarted = false;
 
         function startAudio() {
@@ -786,7 +881,6 @@
                     toggleBtnAudio.textContent = '⏸️ বন্ধ';
                     audioStatus.textContent = 'চালু';
                     audioStatus.className = 'status playing';
-                    // প্রথম ক্লিকের ইভেন্ট সরিয়ে ফেলি (যাতে বারবার না হয়)
                     document.removeEventListener('click', startAudio);
                 }).catch((error) => {
                     console.log('অডিও স্টার্ট করতে সমস্যা:', error);
@@ -794,12 +888,10 @@
             }
         }
 
-        // যখন কেউ পেজের যেকোনো জায়গায় ক্লিক করবে, গান চালু হবে
         document.addEventListener('click', startAudio);
 
-        // On/Off বাটন ক্লিক
         toggleBtnAudio.addEventListener('click', function(e) {
-            e.stopPropagation(); // ইভেন্ট বাবলিং বন্ধ
+            e.stopPropagation();
             if (audio.paused) {
                 audio.play().then(() => {
                     toggleBtnAudio.textContent = '⏸️ বন্ধ';
@@ -817,7 +909,6 @@
             }
         });
 
-        // যদি কোনো কারণে অডিও লোড না হয়
         audio.addEventListener('error', function() {
             console.log('অডিও ফাইল পাওয়া যায়নি। সঠিক পাথ দিন।');
         });
